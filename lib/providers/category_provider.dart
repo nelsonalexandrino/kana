@@ -21,6 +21,10 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
     CategoryModel(name: 'Cinema', icon: FluentIcons.tv_24_regular),
   ];
 
+  CategoryModel bringTheCategory(String id) {
+    return _categoriesExpensises.firstWhere((element) => element.id == id);
+  }
+
   //Methods
   void backspace() {
     if (_expensiveAmount.isNotEmpty) {

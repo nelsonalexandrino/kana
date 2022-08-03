@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
                   return ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: provider.expensesAsMap.length,
+                    itemCount: provider.report.length,
                     itemBuilder: (
                       context,
                       index,

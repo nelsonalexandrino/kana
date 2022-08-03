@@ -111,10 +111,10 @@ class _ModalFitState extends State<ModalFit> {
                 height: 25,
               ),
               SizedBox(
-                height: constraints.maxHeight * .7,
+                height: constraints.maxHeight * .4,
                 child: GridView.count(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  crossAxisCount: 9,
+                  crossAxisCount: 5,
                   scrollDirection: Axis.horizontal,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
@@ -130,6 +130,10 @@ class _ModalFitState extends State<ModalFit> {
                     ),
                   ),
                 ),
+              ),
+              Container(
+                color: Colors.black,
+                height: constraints.maxHeight * .3,
               ),
               Container(
                 margin: const EdgeInsets.only(top: 5),

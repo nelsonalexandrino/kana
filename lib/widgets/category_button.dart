@@ -5,7 +5,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 
-import '../pages/modal_fit.dart';
+import '../pages/add_category.dart';
 import '../utilities/colors.dart';
 import '../providers/category_provider.dart';
 

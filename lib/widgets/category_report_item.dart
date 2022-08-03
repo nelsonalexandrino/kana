@@ -8,6 +8,7 @@ class CategoryReportItem extends StatelessWidget {
     this.trendingTendency,
     this.moneySpent,
     this.categoryIcon,
+    this.totalOfExpenses,
   }) : super(key: key);
 
   final String? categoryName;
@@ -15,6 +16,7 @@ class CategoryReportItem extends StatelessWidget {
   final String? trendingTendency;
   final String? moneySpent;
   final IconData? categoryIcon;
+  final int? totalOfExpenses;
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +75,10 @@ class CategoryReportItem extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 10),
-                const Text(
-                  '3 gastos',
-                  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11),
+                Text(
+                  '$totalOfExpenses gastos',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w300, fontSize: 11),
                 ),
               ],
             ),

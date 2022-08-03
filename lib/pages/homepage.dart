@@ -45,12 +45,18 @@ class _HomePageState extends State<HomePage> {
                       context,
                       index,
                     ) {
-                      return const CategoryReportItem(
-                        categoryName: 'Shop',
-                        trending: FluentIcons.arrow_trending_down_24_regular,
+                      Map ola = provider.report.values.elementAt(index);
+                      print(ola);
+                      print(ola.runtimeType);
+                      return CategoryReportItem(
+                        categoryName: ola['categoryName'],
+                        trending: ola['treading']
+                            ? FluentIcons.arrow_trending_down_24_regular
+                            : FluentIcons.arrow_trending_24_regular,
                         trendingTendency: '-2%',
-                        moneySpent: '3 450 MT',
-                        categoryIcon: FluentIcons.shopping_bag_24_regular,
+                        moneySpent: '${ola['totalAmount']} MT',
+                        categoryIcon: ola['categoryIcon'],
+                        totalOfExpenses: ola['totalOfExpenses'],
                       );
                     },
                   );

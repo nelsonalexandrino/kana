@@ -3,7 +3,7 @@ import 'package:kana/providers/category_provider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../utilities/colors.dart';
-import '../pages/modal_fit.dart';
+import '../pages/add_category.dart';
 
 import 'package:provider/provider.dart';
 

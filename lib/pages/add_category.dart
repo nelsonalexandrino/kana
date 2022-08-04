@@ -131,13 +131,48 @@ class _ModalFitState extends State<ModalFit> {
                   ),
                 ),
               ),
-              Container(
-                color: Colors.black,
-                height: constraints.maxHeight * .3,
+              const SizedBox(
+                height: 30,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Escolha uma cor',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: constraints.maxHeight * .22,
+                child: GridView.count(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    ...List.generate(categoryColors.length, (index) {
+                      return ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          elevation: 1,
+                          backgroundColor: categoryColors.elementAt(index),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        ),
+                        child: null,
+                      );
+                    }),
+                  ],
+                ),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 5),
-                height: constraints.maxHeight * .05,
+                height: constraints.maxHeight * .1,
                 child: TextButton(
                   onPressed: () {
                     if (widget.isNewCategory) {

@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 import '../providers/category_provider.dart';
 import '../models/expense.dart';

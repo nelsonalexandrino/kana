@@ -46,8 +46,7 @@ class _HomePageState extends State<HomePage> {
                       index,
                     ) {
                       Map ola = provider.report.values.elementAt(index);
-                      print(ola);
-                      print(ola.runtimeType);
+
                       return CategoryReportItem(
                         categoryName: ola['categoryName'],
                         trending: ola['treading']

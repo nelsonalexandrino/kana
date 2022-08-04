@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:kana/providers/category_provider.dart';
-
 import 'package:provider/provider.dart';
+
+import '../providers/category_provider.dart';
 
 import '../utilities/colors.dart';
 import '../widgets/select_category.dart';
+import '../widgets/custom_snackbar_content.dart';
 
 class ModalFit extends StatefulWidget {
   final bool isNewCategory;
@@ -45,7 +46,7 @@ class _ModalFitState extends State<ModalFit> {
     return Material(
       child: SafeArea(
         child: LayoutBuilder(builder: (context, constraints) {
-          return Column(
+          return ListView(
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 20.0, top: 15.0),
@@ -56,20 +57,39 @@ class _ModalFitState extends State<ModalFit> {
                       width: 50,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: Border.all(color: primaryColor, width: 2),
+                        border: Border.all(
+                          color: context
+                                      .watch<CategoryProvider>()
+                                      .newCategoryColor !=
+                                  null
+                              ? context
+                                      .read<CategoryProvider>()
+                                      .newCategoryColor ??
+                                  primaryColor
+                              : primaryColor,
+                          width: 0,
+                        ),
                       ),
                       child: PhysicalModel(
                         color: Colors.black,
                         shape: BoxShape.circle,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: backgroundColorNumbersAndIcons,
+                            color: context
+                                    .watch<CategoryProvider>()
+                                    .newCategoryColor ??
+                                backgroundColorNumbersAndIcons,
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
                             context.watch<CategoryProvider>().newCategoryIcon,
                             size: 30,
-                            color: primaryColor,
+                            color: context
+                                        .watch<CategoryProvider>()
+                                        .newCategoryColor !=
+                                    null
+                                ? Colors.white
+                                : primaryColor,
                           ),
                         ),
                       ),
@@ -140,7 +160,7 @@ class _ModalFitState extends State<ModalFit> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Escolha uma cor',
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    style: TextStyle(fontWeight: FontWeight.w400),
                   ),
                 ),
               ),
@@ -152,11 +172,16 @@ class _ModalFitState extends State<ModalFit> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
+                  shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   children: [
                     ...List.generate(categoryColors.length, (index) {
                       return ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context
+                              .read<CategoryProvider>()
+                              .setNewCategoryColor(index);
+                        },
                         style: ElevatedButton.styleFrom(
                           elevation: 1,
                           backgroundColor: categoryColors.elementAt(index),
@@ -177,10 +202,21 @@ class _ModalFitState extends State<ModalFit> {
                   onPressed: () {
                     if (widget.isNewCategory) {
                       if (_formKey.currentState!.validate()) {
-                        context
-                            .read<CategoryProvider>()
-                            .addNewCategory()
-                            .then((value) => Navigator.pop(context, value));
+                        if (context.read<CategoryProvider>().newCategoryColor !=
+                            null) {
+                          context
+                              .read<CategoryProvider>()
+                              .addNewCategory()
+                              .then((value) => Navigator.pop(context, value));
+                        } else {
+                          print('hhhchegamos hummm');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              behavior: SnackBarBehavior.floating,
+                              content: CustomSnackBarContent(),
+                            ),
+                          );
+                        }
                       }
                     } else {
                       if (_formKey.currentState!.validate()) {

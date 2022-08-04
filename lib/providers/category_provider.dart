@@ -1,6 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:kana/utilities/colors.dart';
 
 import '../models/category.dart';
 
@@ -10,6 +11,7 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
   String _expensiveAmount = '';
   String _newCategoryName = '';
   IconData? _newCategoryIcon;
+  Color? _newCategoryColor;
   int _selectedIndexForNewCategory = 3000;
 
   final _categoriesExpensises = [
@@ -48,6 +50,7 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
   int get selectedIndexForNewCategory => _selectedIndexForNewCategory;
   IconData? get newCategoryIcon => _newCategoryIcon;
   String get newCategoryName => _newCategoryName;
+  Color? get newCategoryColor => _newCategoryColor;
   bool get isCategorySelected =>
       _selectedCategoryIndex <= _categoriesExpensises.length;
   Map<String, String> get categoriesNames {
@@ -74,6 +77,11 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
     _newCategoryName = name;
   }
 
+  void setNewCategoryColor(int index) {
+    _newCategoryColor = categoryColors.elementAt(index);
+    notifyListeners();
+  }
+
   void setNewCategoryIcon(IconData icon) {
     _newCategoryIcon = icon;
     notifyListeners();
@@ -85,9 +93,14 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   Future<bool> addNewCategory() async {
-    _categoriesExpensises.add(CategoryModel(
+    _categoriesExpensises.add(
+      CategoryModel(
         name: _newCategoryName,
-        icon: _newCategoryIcon ?? FluentIcons.question_24_regular));
+        icon: _newCategoryIcon ?? FluentIcons.question_24_regular,
+        color: _newCategoryColor,
+      ),
+    );
+
     notifyListeners();
     return true;
   }
@@ -109,6 +122,7 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
     _newCategoryIcon = null;
     _selectedIndexForNewCategory = 3000;
     _expensiveAmount = '';
+    _newCategoryColor = null;
     notifyListeners();
   }
 

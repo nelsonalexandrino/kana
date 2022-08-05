@@ -43,8 +43,9 @@ class _ModalFitState extends State<ModalFit> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SafeArea(
+    return Scaffold(
+      body: SafeArea(
+        bottom: false,
         child: LayoutBuilder(builder: (context, constraints) {
           return ListView(
             children: [
@@ -134,7 +135,7 @@ class _ModalFitState extends State<ModalFit> {
                 height: constraints.maxHeight * .4,
                 child: GridView.count(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  crossAxisCount: 5,
+                  crossAxisCount: 4,
                   scrollDirection: Axis.horizontal,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
@@ -166,73 +167,84 @@ class _ModalFitState extends State<ModalFit> {
               ),
               SizedBox(
                 height: constraints.maxHeight * .22,
-                child: GridView.count(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    ...List.generate(categoryColors.length, (index) {
-                      return ElevatedButton(
-                        onPressed: () {
-                          context
-                              .read<CategoryProvider>()
-                              .setNewCategoryColor(index);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          elevation: 1,
-                          backgroundColor: categoryColors.elementAt(index),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                        child: null,
-                      );
-                    }),
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 5),
-                height: constraints.maxHeight * .1,
-                child: TextButton(
-                  onPressed: () {
-                    if (widget.isNewCategory) {
-                      if (_formKey.currentState!.validate()) {
-                        if (context.read<CategoryProvider>().newCategoryColor !=
-                            null) {
-                          context
-                              .read<CategoryProvider>()
-                              .addNewCategory()
-                              .then((value) => Navigator.pop(context, value));
-                        } else {
-                          print('hhhchegamos hummm');
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              behavior: SnackBarBehavior.floating,
-                              content: CustomSnackBarContent(),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Wrap(
+                    spacing: 5,
+                    runSpacing: 5,
+                    children: [
+                      ...List.generate(categoryColors.length, (index) {
+                        return SizedBox(
+                          height: constraints.maxWidth / 7,
+                          width: constraints.maxWidth / 7,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              context
+                                  .read<CategoryProvider>()
+                                  .setNewCategoryColor(index);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              elevation: 1,
+                              backgroundColor: categoryColors.elementAt(index),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
                             ),
-                          );
-                        }
-                      }
-                    } else {
-                      if (_formKey.currentState!.validate()) {
-                        context
-                            .read<CategoryProvider>()
-                            .updateCategory()
-                            .then((value) => Navigator.pop(context, value));
-                      }
-                    }
-                  },
-                  child: Text(
-                    widget.isNewCategory ? 'Adicionar' : 'Salvar alterações',
-                    style: TextStyle(color: primaryColor, fontSize: 18),
+                            child: null,
+                          ),
+                        );
+                      }),
+                    ],
                   ),
                 ),
-              )
+              ),
+              LimitedBox(
+                  maxHeight: 40,
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 5),
+                    height: constraints.maxHeight * .1,
+                    padding: const EdgeInsets.symmetric(horizontal: 100),
+                    child: TextButton(
+                      onPressed: () {
+                        if (widget.isNewCategory) {
+                          if (_formKey.currentState!.validate()) {
+                            if (context
+                                    .read<CategoryProvider>()
+                                    .newCategoryColor !=
+                                null) {
+                              context
+                                  .read<CategoryProvider>()
+                                  .addNewCategory()
+                                  .then(
+                                      (value) => Navigator.pop(context, value));
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                  behavior: SnackBarBehavior.floating,
+                                  content: CustomSnackBarContent(),
+                                ),
+                              );
+                            }
+                          }
+                        } else {
+                          if (_formKey.currentState!.validate()) {
+                            context
+                                .read<CategoryProvider>()
+                                .updateCategory()
+                                .then((value) => Navigator.pop(context, value));
+                          }
+                        }
+                      },
+                      child: Text(
+                        widget.isNewCategory
+                            ? 'Adicionar'
+                            : 'Salvar alterações',
+                        style: TextStyle(color: primaryColor, fontSize: 18),
+                      ),
+                    ),
+                  )),
             ],
           );
         }),

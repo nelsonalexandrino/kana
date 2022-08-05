@@ -39,6 +39,7 @@ class CategoryReportItem extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           Expanded(
+            flex: 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -57,6 +58,7 @@ class CategoryReportItem extends StatelessWidget {
                     Text(
                       '$trendingTendency than last month',
                       style: const TextStyle(fontSize: 11),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),

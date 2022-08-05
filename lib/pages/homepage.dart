@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:kana/widgets/custom_snackbar_content.dart';
 import 'package:lottie/lottie.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
@@ -102,6 +103,17 @@ class _HomePageState extends State<HomePage> {
       //     return const AddExpensive();
       //   },
       // ),
+    );
+  }
+
+  void newMethod(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        behavior: SnackBarBehavior.floating,
+        content: CustomSnackBarContent(),
+      ),
     );
   }
 }

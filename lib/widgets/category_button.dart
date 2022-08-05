@@ -127,7 +127,8 @@ class _CategoryButtonState extends State<CategoryButton>
                     height: maxHeight / 2,
                     width: maxHeight / 2,
                     decoration: BoxDecoration(
-                      color: backgroundColorNumbersAndIcons,
+                      color: widget.category!.color ??
+                          backgroundColorNumbersAndIcons,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -138,7 +139,9 @@ class _CategoryButtonState extends State<CategoryButton>
                                   .getSelectedCategoryIndex ==
                               widget.index
                           ? primaryColor
-                          : grey,
+                          : widget.category!.color != null
+                              ? Colors.white
+                              : grey,
                     ),
                   ),
                 ),

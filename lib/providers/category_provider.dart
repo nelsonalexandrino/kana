@@ -109,7 +109,7 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
     _categoriesExpensises[_selectedCategoryIndex].icon =
         _newCategoryIcon ?? FluentIcons.question_24_regular;
     _categoriesExpensises[_selectedCategoryIndex].name = _newCategoryName;
-
+    _categoriesExpensises[_selectedCategoryIndex].color = _newCategoryColor;
     notifyListeners();
     return true;
   }

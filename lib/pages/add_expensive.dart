@@ -87,6 +87,11 @@ class _AddExpensiveState extends State<AddExpensive> {
                               .length,
                           itemBuilder: (context, index, animation) {
                             return SlideTransition(
+                              key: Key(context
+                                  .read<CategoryProvider>()
+                                  .categories
+                                  .elementAt(index)
+                                  .id!),
                               position: animation.drive(_tween),
                               child: CategoryButton(
                                   spaceWeHave: categoryHeight,
@@ -161,30 +166,33 @@ class _AddExpensiveState extends State<AddExpensive> {
                         ]),
                   ),
                 ),
-                SizedBox(
-                  height: 40,
-                  width: 230,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      context
-                          .read<ExpenseProvider>()
-                          .addExpenses()
-                          .then((value) => {
-                                if (value)
-                                  {
-                                    context
-                                        .read<CategoryProvider>()
-                                        .resetSelectedCategory(),
-                                    context
-                                        .read<CategoryProvider>()
-                                        .resetEverything(),
-                                    Navigator.pop(context, value)
-                                  }
-                              });
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor, elevation: 0),
-                    child: const Text('Adicionar'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: SizedBox(
+                    height: 50,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<ExpenseProvider>()
+                            .addExpenses()
+                            .then((value) => {
+                                  if (value)
+                                    {
+                                      context
+                                          .read<CategoryProvider>()
+                                          .resetSelectedCategory(),
+                                      context
+                                          .read<CategoryProvider>()
+                                          .resetEverything(),
+                                      Navigator.pop(context, value)
+                                    }
+                                });
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor, elevation: 0),
+                      child: const Text('Adicionar'),
+                    ),
                   ),
                 ),
               ],

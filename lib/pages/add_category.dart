@@ -135,7 +135,7 @@ class _ModalFitState extends State<ModalFit> {
                 height: constraints.maxHeight * .4,
                 child: GridView.count(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  crossAxisCount: 4,
+                  crossAxisCount: 5,
                   scrollDirection: Axis.horizontal,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
@@ -199,52 +199,51 @@ class _ModalFitState extends State<ModalFit> {
                 ),
               ),
               LimitedBox(
-                  maxHeight: 40,
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 5),
-                    height: constraints.maxHeight * .1,
-                    padding: const EdgeInsets.symmetric(horizontal: 100),
-                    child: TextButton(
-                      onPressed: () {
-                        if (widget.isNewCategory) {
-                          if (_formKey.currentState!.validate()) {
-                            if (context
-                                    .read<CategoryProvider>()
-                                    .newCategoryColor !=
-                                null) {
-                              context
+                maxHeight: 50,
+                child: Container(
+                  margin: const EdgeInsets.only(top: 5),
+                  height: constraints.maxHeight * .1,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        elevation: 0, backgroundColor: primaryColor),
+                    onPressed: () {
+                      if (widget.isNewCategory) {
+                        if (_formKey.currentState!.validate()) {
+                          if (context
                                   .read<CategoryProvider>()
-                                  .addNewCategory()
-                                  .then(
-                                      (value) => Navigator.pop(context, value));
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  backgroundColor: Colors.transparent,
-                                  elevation: 0,
-                                  behavior: SnackBarBehavior.floating,
-                                  content: CustomSnackBarContent(),
-                                ),
-                              );
-                            }
-                          }
-                        } else {
-                          if (_formKey.currentState!.validate()) {
+                                  .newCategoryColor !=
+                              null) {
                             context
                                 .read<CategoryProvider>()
-                                .updateCategory()
+                                .addNewCategory()
                                 .then((value) => Navigator.pop(context, value));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                behavior: SnackBarBehavior.floating,
+                                content: CustomSnackBarContent(),
+                              ),
+                            );
                           }
                         }
-                      },
-                      child: Text(
-                        widget.isNewCategory
-                            ? 'Adicionar'
-                            : 'Salvar alterações',
-                        style: TextStyle(color: primaryColor, fontSize: 18),
-                      ),
+                      } else {
+                        if (_formKey.currentState!.validate()) {
+                          context
+                              .read<CategoryProvider>()
+                              .updateCategory()
+                              .then((value) => Navigator.pop(context, value));
+                        }
+                      }
+                    },
+                    child: Text(
+                      widget.isNewCategory ? 'Adicionar' : 'Salvar alterações',
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ],
           );
         }),

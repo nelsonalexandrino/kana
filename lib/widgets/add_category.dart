@@ -37,8 +37,7 @@ class _AddCategoryButtonState extends State<AddCategoryButton> {
               showCupertinoModalBottomSheet<bool>(
                 context: context,
                 expand: true,
-                builder: (context) =>
-                    const AddEditCategory(isNewCategory: true),
+                builder: (context) => const AddEditCategory(isToUpdate: true),
               ).then((value) {
                 context.read<CategoryProvider>().resetEverything();
                 if (value ?? false) {

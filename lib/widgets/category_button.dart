@@ -61,7 +61,7 @@ class _CategoryButtonState extends State<CategoryButton>
               showCupertinoModalBottomSheet(
                 context: context,
                 builder: (context) => AddEditCategory(
-                    isNewCategory: false, categoryModel: widget.category),
+                    isToUpdate: false, categoryModel: widget.category),
               ).then((value) {
                 context.read<CategoryProvider>().resetEverything();
                 context.read<CategoryProvider>().resetSelectedCategory();

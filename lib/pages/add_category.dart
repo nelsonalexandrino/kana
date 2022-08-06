@@ -10,11 +10,11 @@ import '../widgets/select_category.dart';
 import '../widgets/custom_snackbar_content.dart';
 
 class AddEditCategory extends StatefulWidget {
-  final bool isNewCategory;
+  final bool isToUpdate;
   final CategoryModel? categoryModel;
 
   const AddEditCategory({
-    this.isNewCategory = false,
+    this.isToUpdate = false,
     this.categoryModel,
     super.key,
   });
@@ -30,7 +30,7 @@ class _AddEditCategoryState extends State<AddEditCategory> {
 
   @override
   void initState() {
-    if (!widget.isNewCategory) {
+    if (!widget.isToUpdate) {
       _textCategoryController =
           TextEditingController(text: widget.categoryModel!.name);
     } else {
@@ -63,7 +63,7 @@ class _AddEditCategoryState extends State<AddEditCategory> {
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         // border: Border.all(
-                        //   color: !widget.isNewCategory
+                        //   color: !widget.isToUpdate
                         //       ? widget.categoryModel!.color!
                         //       : backgroundColorNumbersAndIcons,
                         //   width: 0,
@@ -81,7 +81,7 @@ class _AddEditCategoryState extends State<AddEditCategory> {
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
-                            !widget.isNewCategory
+                            !widget.isToUpdate
                                 ? widget.categoryModel?.icon
                                 : FluentIcons.question_24_regular,
                             size: 30,
@@ -217,7 +217,7 @@ class _AddEditCategoryState extends State<AddEditCategory> {
                     style: ElevatedButton.styleFrom(
                         elevation: 0, backgroundColor: primaryColor),
                     onPressed: () {
-                      if (widget.isNewCategory) {
+                      if (widget.isToUpdate) {
                         if (_formKey.currentState!.validate()) {
                           if (context
                                   .read<CategoryProvider>()
@@ -248,7 +248,7 @@ class _AddEditCategoryState extends State<AddEditCategory> {
                       }
                     },
                     child: Text(
-                      widget.isNewCategory ? 'Adicionar' : 'Salvar alterações',
+                      widget.isToUpdate ? 'Adicionar' : 'Salvar alterações',
                     ),
                   ),
                 ),

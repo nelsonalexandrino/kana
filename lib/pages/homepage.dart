@@ -49,13 +49,14 @@ class _HomePageState extends State<HomePage> {
                       Map ola = provider.report.values.elementAt(index);
 
                       return CategoryReportItem(
-                        categoryName: ola['categoryName'],
+                        //categoryName: ola['categoryName'],
                         trending: ola['treading']
                             ? FluentIcons.arrow_trending_down_24_regular
                             : FluentIcons.arrow_trending_24_regular,
                         trendingTendency: '-2%',
                         moneySpent: '${ola['totalAmount']} MT',
-                        categoryIcon: ola['categoryIcon'],
+                        categoryID: ola['categoryID'],
+                        //categoryIcon: ola['categoryIcon'],
                         totalOfExpenses: ola['totalOfExpenses'],
                       );
                     },

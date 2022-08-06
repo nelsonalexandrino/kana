@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:kana/models/category.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 
+import '../models/category.dart';
 import '../pages/add_category.dart';
 import '../utilities/colors.dart';
 import '../providers/category_provider.dart';
@@ -70,10 +70,11 @@ class _CategoryButtonState extends State<CategoryButton>
               context
                   .read<CategoryProvider>()
                   .setNewCategoryName(widget.category!.name);
-
               context
                   .read<CategoryProvider>()
                   .setSelectedCategoryToEditIndex(widget.index);
+              context.read<CategoryProvider>().setNewCategoryColor(
+                  widget.category!.color ?? backgroundColorNumbersAndIcons);
 
               showCupertinoModalBottomSheet(
                 context: context,

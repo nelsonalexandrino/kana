@@ -4,6 +4,8 @@ import '../providers/category_provider.dart';
 import '../models/expense.dart';
 
 class ExpenseProvider with ChangeNotifier, DiagnosticableTreeMixin {
+  String _expensiveAmount = '';
+
   CategoryProvider _provider = CategoryProvider();
   update(CategoryProvider provider) {
     _provider = provider;
@@ -42,6 +44,7 @@ class ExpenseProvider with ChangeNotifier, DiagnosticableTreeMixin {
         'totalAmount': totalAmount,
         'categoryName': ola.name,
         'categoryIcon': ola.icon,
+        'categoryID': ola.id,
         'totalOfExpenses': expenses.length,
         'treading': treding,
         'tredingValue': tredingValue,
@@ -87,5 +90,13 @@ class ExpenseProvider with ChangeNotifier, DiagnosticableTreeMixin {
       }
     }
     return false;
+  }
+
+  void backspace() {
+    if (_expensiveAmount.isNotEmpty) {
+      _expensiveAmount =
+          _expensiveAmount.substring(0, _expensiveAmount.length - 1);
+      notifyListeners();
+    }
   }
 }

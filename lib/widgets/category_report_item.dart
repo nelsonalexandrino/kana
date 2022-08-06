@@ -1,25 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:kana/providers/category_provider.dart';
+
+import 'package:provider/provider.dart';
 
 class CategoryReportItem extends StatelessWidget {
   const CategoryReportItem({
     Key? key,
-    this.categoryName,
+    //this.categoryName,
     this.trending,
     this.trendingTendency,
     this.moneySpent,
-    this.categoryIcon,
+    //this.categoryIcon,
     this.totalOfExpenses,
+    this.categoryID,
   }) : super(key: key);
 
-  final String? categoryName;
+  //final String? categoryName;
   final IconData? trending;
   final String? trendingTendency;
   final String? moneySpent;
-  final IconData? categoryIcon;
+  //final IconData? categoryIcon;
   final int? totalOfExpenses;
+  final String? categoryID;
 
   @override
   Widget build(BuildContext context) {
+    var category = context
+        .watch<CategoryProvider>()
+        .categories
+        .firstWhere((element) => element.id == categoryID);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       margin: const EdgeInsets.only(bottom: 16),
@@ -28,12 +37,12 @@ class CategoryReportItem extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(10),
-            decoration: const BoxDecoration(
-              color: Colors.red,
+            decoration: BoxDecoration(
+              color: category.color,
               shape: BoxShape.circle,
             ),
             child: Icon(
-              categoryIcon,
+              category.icon,
               color: Colors.white,
             ),
           ),
@@ -44,7 +53,7 @@ class CategoryReportItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  categoryName!,
+                  category.name,
                   style: const TextStyle(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 4),

@@ -181,7 +181,7 @@ class _ModalFitState extends State<ModalFit> {
                             onPressed: () {
                               context
                                   .read<CategoryProvider>()
-                                  .setNewCategoryColor(index);
+                                  .setNewCategoryColorIndex(index);
                             },
                             style: ElevatedButton.styleFrom(
                               elevation: 1,

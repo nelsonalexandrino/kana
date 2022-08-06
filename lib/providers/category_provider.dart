@@ -12,6 +12,7 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
   String _newCategoryName = '';
   IconData? _newCategoryIcon;
   Color? _newCategoryColor;
+  int _newCategoryColorIndex = 4000;
   int _selectedIndexForNewCategory = 3000;
   CategoryModel? _categoryModelToBeEdited;
 
@@ -63,6 +64,8 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
     return ola;
   }
 
+  int get getNewCategoryColorIndex => _newCategoryColorIndex;
+
   CategoryModel get categoryModelToBeEdited =>
       _categoriesExpensises.elementAt(_selectedCategoryIndex);
 
@@ -82,7 +85,7 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   void setNewCategoryColorIndex(int index) {
-    _newCategoryColor = categoryColors.elementAt(index);
+    _newCategoryColorIndex = index;
     notifyListeners();
   }
 
@@ -99,7 +102,7 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
     _categoryModelToBeEdited = model;
   }
 
-  void thisIsTheIconSelectedForCategory(int index) {
+  void setNewIconCategoryIndex(int index) {
     _selectedIndexForNewCategory = index;
     notifyListeners();
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:provider/provider.dart';
 
 import '../utilities/colors.dart';
@@ -41,11 +40,7 @@ class _SelectCategoryIconState extends State<SelectCategoryIcon> {
         onPressed: () {
           context
               .read<CategoryProvider>()
-              .setNewCategoryIcon(widget.icon ?? FluentIcons.money_24_filled);
-
-          context
-              .read<CategoryProvider>()
-              .thisIsTheIconSelectedForCategory(widget.index ?? 0);
+              .setNewIconCategoryIndex(widget.index!);
         },
       ),
     );

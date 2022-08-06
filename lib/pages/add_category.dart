@@ -9,21 +9,21 @@ import '../utilities/colors.dart';
 import '../widgets/select_category.dart';
 import '../widgets/custom_snackbar_content.dart';
 
-class ModalFit extends StatefulWidget {
+class AddEditCategory extends StatefulWidget {
   final bool isNewCategory;
   final CategoryModel? categoryModel;
 
-  const ModalFit({
+  const AddEditCategory({
     this.isNewCategory = false,
     this.categoryModel,
     super.key,
   });
 
   @override
-  State<ModalFit> createState() => _ModalFitState();
+  State<AddEditCategory> createState() => _AddEditCategoryState();
 }
 
-class _ModalFitState extends State<ModalFit> {
+class _AddEditCategoryState extends State<AddEditCategory> {
   late final TextEditingController _textCategoryController;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -132,7 +132,7 @@ class _ModalFitState extends State<ModalFit> {
                 height: 25,
               ),
               SizedBox(
-                height: constraints.maxHeight * .4,
+                height: constraints.maxHeight * .39,
                 child: GridView.count(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   crossAxisCount: 5,
@@ -172,27 +172,37 @@ class _ModalFitState extends State<ModalFit> {
                     spacing: 5,
                     runSpacing: 5,
                     children: [
-                      ...List.generate(categoryColors.length, (index) {
-                        return SizedBox(
-                          height: constraints.maxWidth / 7,
-                          width: constraints.maxWidth / 7,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              context
+                      ...List.generate(
+                        categoryColors.length,
+                        (index) {
+                          return Container(
+                            height: constraints.maxWidth / 7,
+                            width: constraints.maxWidth / 7,
+                            padding: const EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                                border: context
+                                            .watch<CategoryProvider>()
+                                            .getNewCategoryColorIndex ==
+                                        index
+                                    ? Border.all(
+                                        color: categoryColors.elementAt(index),
+                                        width: 3)
+                                    : null,
+                                shape: BoxShape.circle),
+                            child: GestureDetector(
+                              onTap: () => context
                                   .read<CategoryProvider>()
-                                  .setNewCategoryColorIndex(index);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              elevation: 1,
-                              backgroundColor: categoryColors.elementAt(index),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
+                                  .setNewCategoryColorIndex(index),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: categoryColors.elementAt(index),
+                                  shape: BoxShape.circle,
+                                ),
                               ),
                             ),
-                            child: null,
-                          ),
-                        );
-                      }),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),

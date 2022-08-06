@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+
 import '../utilities/colors.dart';
 import '../widgets/select_category.dart';
 import '../utilities/custom_animation.dart';

@@ -60,7 +60,7 @@ class _CategoryButtonState extends State<CategoryButton>
             onLongPress: () {
               showCupertinoModalBottomSheet(
                 context: context,
-                builder: (context) => ModalFit(
+                builder: (context) => AddEditCategory(
                     isNewCategory: false, categoryModel: widget.category),
               ).then((value) {
                 context.read<CategoryProvider>().resetEverything();

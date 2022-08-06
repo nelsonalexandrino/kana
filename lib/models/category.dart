@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
+import '../utilities/colors.dart';
+
 class CategoryModel with ChangeNotifier {
   final _uuid = const Uuid();
 
@@ -11,6 +13,7 @@ class CategoryModel with ChangeNotifier {
 
   CategoryModel({this.name = '', this.icon = Icons.money, this.color}) {
     _id = _uuid.v4();
+    color = grey;
   }
 
   void changeColor(Color newColor) {

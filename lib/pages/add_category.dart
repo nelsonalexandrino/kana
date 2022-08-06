@@ -1,4 +1,6 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:kana/models/category.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/category_provider.dart';
@@ -9,9 +11,11 @@ import '../widgets/custom_snackbar_content.dart';
 
 class ModalFit extends StatefulWidget {
   final bool isNewCategory;
+  final CategoryModel? categoryModel;
 
   const ModalFit({
     this.isNewCategory = false,
+    this.categoryModel,
     super.key,
   });
 
@@ -27,8 +31,8 @@ class _ModalFitState extends State<ModalFit> {
   @override
   void initState() {
     if (!widget.isNewCategory) {
-      _textCategoryController = TextEditingController(
-          text: context.read<CategoryProvider>().newCategoryName);
+      _textCategoryController =
+          TextEditingController(text: widget.categoryModel!.name);
     } else {
       _textCategoryController = TextEditingController();
     }
@@ -56,20 +60,14 @@ class _ModalFitState extends State<ModalFit> {
                     Container(
                       height: 50,
                       width: 50,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        border: Border.all(
-                          color: context
-                                      .watch<CategoryProvider>()
-                                      .newCategoryColor !=
-                                  null
-                              ? context
-                                      .read<CategoryProvider>()
-                                      .newCategoryColor ??
-                                  primaryColor
-                              : primaryColor,
-                          width: 0,
-                        ),
+                        // border: Border.all(
+                        //   color: !widget.isNewCategory
+                        //       ? widget.categoryModel!.color!
+                        //       : backgroundColorNumbersAndIcons,
+                        //   width: 0,
+                        // ),
                       ),
                       child: PhysicalModel(
                         color: Colors.black,
@@ -83,7 +81,9 @@ class _ModalFitState extends State<ModalFit> {
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
-                            context.watch<CategoryProvider>().newCategoryIcon,
+                            !widget.isNewCategory
+                                ? widget.categoryModel?.icon
+                                : FluentIcons.question_24_regular,
                             size: 30,
                             color: context
                                         .watch<CategoryProvider>()
@@ -141,9 +141,8 @@ class _ModalFitState extends State<ModalFit> {
                   crossAxisSpacing: 10,
                   children: List.generate(
                     context.read<CategoryProvider>().myIcons.length,
-                    (index) => SelectCategory(
+                    (index) => SelectCategoryIcon(
                       index: index,
-                      newCategory: widget.isNewCategory,
                       icon: context
                           .read<CategoryProvider>()
                           .myIcons

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:kana/utilities/colors.dart';
+import '../utilities/colors.dart';
 import '../widgets/select_category.dart';
 import '../utilities/custom_animation.dart';
 
@@ -47,7 +47,7 @@ class AddTodoPopupCard extends StatelessWidget {
                           crossAxisSpacing: 10,
                           children: List.generate(
                             40,
-                            (index) => SelectCategory(),
+                            (index) => SelectCategoryIcon(),
                           ),
                         ),
                       ),

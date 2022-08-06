@@ -219,7 +219,7 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
     FluentIcons.tv_24_regular,
     FluentIcons.wallet_credit_card_24_regular,
     FluentIcons.wrench_screwdriver_24_regular,
-    FluentIcons.xbox_console_24_regular,
+    //FluentIcons.xbox_console_24_regular,
     FluentIcons.xbox_controller_24_regular,
   ];
 }

@@ -45,7 +45,7 @@ class _CategoryButtonState extends State<CategoryButton>
   double eleventionShadow = 0.0;
   @override
   Widget build(BuildContext context) {
-    var ola = context.read<CategoryProvider>().categories[widget.index];
+    //var ola = context.read<CategoryProvider>().categories[widget.index];
     double maxHeight = widget.spaceWeHave;
     return Container(
       margin: const EdgeInsets.only(right: 12),
@@ -58,27 +58,10 @@ class _CategoryButtonState extends State<CategoryButton>
                   .setSelectedCategoryToEditIndex(widget.index);
             },
             onLongPress: () {
-              // setState(() {
-              //   eleventionShadow = 2.4;
-              // });
-
-              context.read<CategoryProvider>().resetSelectedCategory();
-
-              context
-                  .read<CategoryProvider>()
-                  .setNewCategoryIcon(widget.category!.icon);
-              context
-                  .read<CategoryProvider>()
-                  .setNewCategoryName(widget.category!.name);
-              context
-                  .read<CategoryProvider>()
-                  .setSelectedCategoryToEditIndex(widget.index);
-              context.read<CategoryProvider>().setNewCategoryColor(
-                  widget.category!.color ?? backgroundColorNumbersAndIcons);
-
               showCupertinoModalBottomSheet(
                 context: context,
-                builder: (context) => const ModalFit(isNewCategory: false),
+                builder: (context) => ModalFit(
+                    isNewCategory: false, categoryModel: widget.category),
               ).then((value) {
                 context.read<CategoryProvider>().resetEverything();
                 context.read<CategoryProvider>().resetSelectedCategory();
@@ -128,21 +111,13 @@ class _CategoryButtonState extends State<CategoryButton>
                     height: maxHeight / 2,
                     width: maxHeight / 2,
                     decoration: BoxDecoration(
-                      color: widget.category!.color ??
-                          backgroundColorNumbersAndIcons,
+                      color: backgroundColorNumbersAndIcons,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
-                      ola.icon,
+                      widget.category!.icon,
                       size: maxHeight / 4 > 24.0 ? 24 : maxHeight / 4,
-                      color: context
-                                  .watch<CategoryProvider>()
-                                  .getSelectedCategoryIndex ==
-                              widget.index
-                          ? primaryColor
-                          : widget.category!.color != null
-                              ? Colors.white
-                              : grey,
+                      color: grey,
                     ),
                   ),
                 ),
@@ -151,14 +126,10 @@ class _CategoryButtonState extends State<CategoryButton>
           ),
           const SizedBox(height: 3),
           Text(
-            ola.name,
+            widget.category!.name,
             style: TextStyle(
               fontSize: 12,
-              color:
-                  context.watch<CategoryProvider>().getSelectedCategoryIndex ==
-                          widget.index
-                      ? primaryColor
-                      : const Color(0xff616657),
+              color: grey,
             ),
           ),
         ],

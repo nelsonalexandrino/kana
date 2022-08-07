@@ -60,12 +60,14 @@ class ExpenseProvider with ChangeNotifier, DiagnosticableTreeMixin {
     if (_provider.getExpensiveAmount.isNotEmpty) {
       if (_provider.getExpensiveAmount != '0') {
         double value = double.parse(_provider.getExpensiveAmount);
-
-        if (_provider.isCategorySelected) {
+//TODO
+        //if (_provider.isCategorySelected) {
+        if (true) {
           var expense = Expense(
             value: value,
-            category: _provider.categories
-                .elementAt(_provider.getSelectedCategoryIndex),
+            // category: _provider.categories.elementAt(
+            //   _provider.getSelectedCategoryIndex,
+            // ),
           )..defaultDate();
           _userExpenses.add(
             expense,

@@ -1,20 +1,17 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:kana/utilities/colors.dart';
+import '../utilities/colors.dart';
 
 import '../models/category.dart';
 
 class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
   //Variables
-  int _selectedCategoryIndex = 3000;
-  String _expensiveAmount = '';
-  String _newCategoryName = '';
-  IconData? _newCategoryIcon;
-  Color? _newCategoryColor;
-  int _newCategoryColorIndex = 4000;
-  int _selectedIndexForNewCategory = 3000;
-  CategoryModel? _categoryModelToBeEdited;
+  int _selectedCategoryToEditIndex = 3000;
+
+  int _selectedIconForNewCategoryIndex = 3000;
+  int _selectedColorIndex = 3000;
+  CategoryModel _categoryModelToBeEdited = CategoryModel();
 
   final _categoriesExpensises = [
     CategoryModel(name: 'Food', icon: FluentIcons.food_24_regular),
@@ -30,31 +27,36 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   //Methods
-  void backspace() {
-    if (_expensiveAmount.isNotEmpty) {
-      _expensiveAmount =
-          _expensiveAmount.substring(0, _expensiveAmount.length - 1);
-      notifyListeners();
-    }
+
+  Future<bool> updateCategory(String name) async {
+    _categoryModelToBeEdited.name = name;
+    _categoriesExpensises.removeAt(_selectedCategoryToEditIndex);
+    _categoriesExpensises.insert(
+        _selectedCategoryToEditIndex, _categoryModelToBeEdited);
+    notifyListeners();
+    return true;
+  }
+
+  Future<bool> addNewCategory() async {
+    _categoriesExpensises.add(_categoryModelToBeEdited);
+    return true;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(IntProperty('category', getSelectedCategoryIndex));
+    properties.add(IntProperty('category', 121));
   }
 
   //Getters
-  String get getExpensiveAmount => _expensiveAmount;
-  int get getSelectedCategoryIndex => _selectedCategoryIndex;
+  CategoryModel get categoryModelToBeEdited => _categoryModelToBeEdited;
+  int get selectedCategoryToEditIndex => _selectedCategoryToEditIndex;
+  int get selectedColorIndex => _selectedColorIndex;
+
   List<CategoryModel> get categories => _categoriesExpensises;
   List<IconData> get myIcons => _myIcons;
-  int get selectedIndexForNewCategory => _selectedIndexForNewCategory;
-  IconData? get newCategoryIcon => _newCategoryIcon;
-  String get newCategoryName => _newCategoryName;
-  Color? get newCategoryColor => _newCategoryColor;
-  bool get isCategorySelected =>
-      _selectedCategoryIndex <= _categoriesExpensises.length;
+  int get selectedIconForNewCategoryIndex => _selectedIconForNewCategoryIndex;
+
   Map<String, String> get categoriesNames {
     Map<String, String> ola = {};
 
@@ -64,85 +66,63 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
     return ola;
   }
 
-  int get getNewCategoryColorIndex => _newCategoryColorIndex;
-
-  CategoryModel get categoryModelToBeEdited =>
-      _categoriesExpensises.elementAt(_selectedCategoryIndex);
-
   //Setters
-  void setSelectedCategoryToEditIndex(int index) {
-    _selectedCategoryIndex = index;
+  void selectedCategoryToEdit(
+      {required CategoryModel categoryModel, required int index}) {
+    _categoryModelToBeEdited = categoryModel;
+    _selectedCategoryToEditIndex = index;
+
+    shakeTheList(categoryModel);
+
+    _selectedIconForNewCategoryIndex =
+        _myIcons.indexWhere((element) => element == categoryModel.icon);
+  }
+
+  void shakeTheList(CategoryModel categoryModel) {
+    var oi = _myIcons.indexWhere((element) => element == categoryModel.icon);
+    var ola = _myIcons.elementAt(oi);
+    _myIcons.removeAt(oi);
+    _myIcons.insert(0, ola);
+  }
+
+  void setNewCategoryName(String name) {
+    _categoryModelToBeEdited.name = name;
+  }
+
+  void setNewIconCategoryIndex(int index) {
+    _selectedIconForNewCategoryIndex = index;
+    _categoryModelToBeEdited.icon = _myIcons.elementAt(index);
     notifyListeners();
   }
 
+  void setSelectedColorIndex(int index) {
+    _selectedColorIndex = index;
+    _categoryModelToBeEdited.color = categoryColors.elementAt(index);
+    _categoryModelToBeEdited.colorIndex = index;
+    notifyListeners();
+  }
+
+//TODO
+
+  String _expensiveAmount = '';
+  String get getExpensiveAmount => _expensiveAmount;
   void setExpensiveAmount(String number) {
     _expensiveAmount += number;
     notifyListeners();
   }
 
-  void setNewCategoryName(String name) {
-    _newCategoryName = name;
-  }
-
-  void setNewCategoryColorIndex(int index) {
-    _newCategoryColorIndex = index;
-    notifyListeners();
-  }
-
-  void setNewCategoryColor(Color color) {
-    _newCategoryColor = color;
-  }
-
-  void setNewCategoryIcon(IconData icon) {
-    _newCategoryIcon = icon;
-    notifyListeners();
-  }
-
-  void toBeEdited(CategoryModel model) {
-    _categoryModelToBeEdited = model;
-  }
-
-  void setNewIconCategoryIndex(int index) {
-    _selectedIndexForNewCategory = index;
-    notifyListeners();
-  }
-
-  Future<bool> addNewCategory() async {
-    _categoriesExpensises.add(
-      CategoryModel(
-        name: _newCategoryName,
-        icon: _newCategoryIcon ?? FluentIcons.question_24_regular,
-        color: _newCategoryColor,
-      ),
-    );
-
-    notifyListeners();
-    return true;
-  }
-
-  Future<bool> updateCategory() async {
-    _categoriesExpensises[_selectedCategoryIndex].icon =
-        _newCategoryIcon ?? FluentIcons.question_24_regular;
-    _categoriesExpensises[_selectedCategoryIndex].name = _newCategoryName;
-    _categoriesExpensises[_selectedCategoryIndex].color = _newCategoryColor;
-    notifyListeners();
-    return true;
-  }
-
-  //reseters
-  void resetSelectedCategory() => _selectedCategoryIndex = 3000;
-
-  void resetEverything() {
-    _newCategoryName = '';
-    _newCategoryIcon = null;
-    _selectedIndexForNewCategory = 3000;
-    _expensiveAmount = '';
-    _newCategoryColor = null;
-    notifyListeners();
+  void backspace() {
+    if (_expensiveAmount.isNotEmpty) {
+      _expensiveAmount =
+          _expensiveAmount.substring(0, _expensiveAmount.length - 1);
+      notifyListeners();
+    }
   }
 
   //Icons
   final _myIcons = [
+    Icons.directions_car,
+    FluentIcons.cart_24_regular,
     FluentIcons.access_time_24_regular,
     FluentIcons.accessibility_24_regular,
     FluentIcons.add_24_regular,

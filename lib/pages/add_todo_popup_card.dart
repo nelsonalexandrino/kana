@@ -48,7 +48,7 @@ class AddTodoPopupCard extends StatelessWidget {
                           crossAxisSpacing: 10,
                           children: List.generate(
                             40,
-                            (index) => SelectCategoryIcon(),
+                            (index) => SelectCategoryIconButton(),
                           ),
                         ),
                       ),

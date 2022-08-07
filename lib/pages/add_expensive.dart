@@ -49,7 +49,7 @@ class _AddExpensiveState extends State<AddExpensive> {
         actions: [
           IconButton(
             onPressed: () {
-              context.read<CategoryProvider>().resetSelectedCategory();
+              //context.read<CategoryProvider>().resetSelectedCategory();
               Navigator.pop(context);
             },
             icon: const Icon(FluentIcons.dismiss_20_filled,
@@ -179,13 +179,13 @@ class _AddExpensiveState extends State<AddExpensive> {
                             .then((value) => {
                                   if (value)
                                     {
-                                      context
-                                          .read<CategoryProvider>()
-                                          .resetSelectedCategory(),
-                                      context
-                                          .read<CategoryProvider>()
-                                          .resetEverything(),
-                                      Navigator.pop(context, value)
+                                      // context
+                                      //     .read<CategoryProvider>()
+                                      //     .resetSelectedCategory(),
+                                      // context
+                                      //     .read<CategoryProvider>()
+                                      //     .resetEverything(),
+                                      // Navigator.pop(context, value)
                                     }
                                 });
                       },

@@ -53,18 +53,22 @@ class _CategoryButtonState extends State<CategoryButton>
         children: [
           GestureDetector(
             onTap: () {
-              context
-                  .read<CategoryProvider>()
-                  .setSelectedCategoryToEditIndex(widget.index);
+              // context
+              //     .read<CategoryProvider>()
+              //     .setSelectedCategoryToEditIndex(widget.index);
             },
             onLongPress: () {
               showCupertinoModalBottomSheet(
                 context: context,
-                builder: (context) => AddEditCategory(
-                    isToUpdate: false, categoryModel: widget.category),
+                builder: (context) {
+                  context.read<CategoryProvider>().selectedCategoryToEdit(
+                      categoryModel: CategoryModel.from(widget.category!),
+                      index: widget.index);
+                  return const AddEditCategory(isToUpdate: true);
+                },
               ).then((value) {
-                context.read<CategoryProvider>().resetEverything();
-                context.read<CategoryProvider>().resetSelectedCategory();
+                //context.read<CategoryProvider>().resetEverything();
+                //context.read<CategoryProvider>().resetSelectedCategory();
 
                 // if (value ?? false) {
                 //   print('skjfksnf');
@@ -93,14 +97,16 @@ class _CategoryButtonState extends State<CategoryButton>
                 width: maxHeight / 2 + 3,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(
-                    color: context
-                                .watch<CategoryProvider>()
-                                .getSelectedCategoryIndex ==
-                            widget.index
-                        ? primaryColor
-                        : Colors.transparent,
-                  ),
+                  // border:
+
+                  // Border.all(
+                  //   color: context
+                  //               .watch<CategoryProvider>()
+                  //               .getSelectedCategoryIndex ==
+                  //           widget.index
+                  //       ? primaryColor
+                  //       : Colors.transparent,
+                  // ),
                 ),
                 padding: const EdgeInsets.all(2),
                 child: PhysicalModel(

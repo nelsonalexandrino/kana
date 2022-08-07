@@ -39,7 +39,8 @@ class _AddCategoryButtonState extends State<AddCategoryButton> {
                 expand: true,
                 builder: (context) => const AddEditCategory(isToUpdate: true),
               ).then((value) {
-                context.read<CategoryProvider>().resetEverything();
+                //TODO
+                // context.read<CategoryProvider>().resetEverything();
                 if (value ?? false) {
                   Future.delayed(const Duration(milliseconds: 400), () {
                     widget.globalKey!.currentState!.insertItem(

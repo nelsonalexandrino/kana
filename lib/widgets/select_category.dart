@@ -6,32 +6,34 @@ import '../utilities/colors.dart';
 import '../providers/category_provider.dart';
 
 // ignore: must_be_immutable
-class SelectCategoryIcon extends StatefulWidget {
+class SelectCategoryIconButton extends StatefulWidget {
   int? index;
   IconData? icon;
 
-  SelectCategoryIcon({
+  SelectCategoryIconButton({
     this.index,
     this.icon,
     super.key,
   });
 
   @override
-  State<SelectCategoryIcon> createState() => _SelectCategoryIconState();
+  State<SelectCategoryIconButton> createState() =>
+      _SelectCategoryIconButtonState();
 }
 
-class _SelectCategoryIconState extends State<SelectCategoryIcon> {
+class _SelectCategoryIconButtonState extends State<SelectCategoryIconButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           color: backgroundColorNumbersAndIcons,
           shape: BoxShape.circle,
-          border:
-              context.watch<CategoryProvider>().selectedIndexForNewCategory ==
-                      widget.index
-                  ? Border.all(color: primaryColor, width: 2)
-                  : null),
+          border: context
+                      .watch<CategoryProvider>()
+                      .selectedIconForNewCategoryIndex ==
+                  widget.index
+              ? Border.all(color: primaryColor, width: 2)
+              : null),
       child: IconButton(
         icon: Icon(widget.icon),
         splashRadius: 37.0,

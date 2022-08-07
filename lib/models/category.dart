@@ -10,10 +10,12 @@ class CategoryModel with ChangeNotifier {
   IconData icon;
   String? _id;
   Color? color;
+  int? colorIndex;
 
-  CategoryModel({this.name = '', this.icon = Icons.money, this.color}) {
+  CategoryModel(
+      {this.name = '', this.icon = Icons.money, this.color, this.colorIndex}) {
     _id = _uuid.v4();
-    color = grey;
+    //color = grey;
   }
 
   void changeColor(Color newColor) {
@@ -31,5 +33,18 @@ class CategoryModel with ChangeNotifier {
     notifyListeners();
   }
 
+  void setColorIndex(int index) {
+    colorIndex = index;
+    notifyListeners();
+  }
+
   String? get id => _id;
+
+  factory CategoryModel.from(CategoryModel model) {
+    return CategoryModel(
+        color: model.color,
+        colorIndex: model.colorIndex,
+        icon: model.icon,
+        name: model.name);
+  }
 }

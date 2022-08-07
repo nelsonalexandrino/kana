@@ -1,21 +1,19 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:kana/models/category.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/category_provider.dart';
 
 import '../utilities/colors.dart';
 import '../widgets/select_category.dart';
-import '../widgets/custom_snackbar_content.dart';
 
 class AddEditCategory extends StatefulWidget {
   final bool isToUpdate;
-  final CategoryModel? categoryModel;
+  //final CategoryModel? categoryModel;
 
   const AddEditCategory({
     this.isToUpdate = false,
-    this.categoryModel,
+    //this.categoryModel,
     super.key,
   });
 
@@ -30,9 +28,9 @@ class _AddEditCategoryState extends State<AddEditCategory> {
 
   @override
   void initState() {
-    if (!widget.isToUpdate) {
-      _textCategoryController =
-          TextEditingController(text: widget.categoryModel!.name);
+    if (widget.isToUpdate) {
+      var name = context.read<CategoryProvider>().categoryModelToBeEdited.name;
+      _textCategoryController = TextEditingController(text: name);
     } else {
       _textCategoryController = TextEditingController();
     }
@@ -62,36 +60,31 @@ class _AddEditCategoryState extends State<AddEditCategory> {
                       width: 50,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        // border: Border.all(
-                        //   color: !widget.isToUpdate
-                        //       ? widget.categoryModel!.color!
-                        //       : backgroundColorNumbersAndIcons,
-                        //   width: 0,
-                        // ),
                       ),
-                      child: PhysicalModel(
-                        color: Colors.black,
-                        shape: BoxShape.circle,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: context
-                                    .watch<CategoryProvider>()
-                                    .newCategoryColor ??
-                                backgroundColorNumbersAndIcons,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            !widget.isToUpdate
-                                ? widget.categoryModel?.icon
-                                : FluentIcons.question_24_regular,
-                            size: 30,
-                            color: context
-                                        .watch<CategoryProvider>()
-                                        .newCategoryColor !=
-                                    null
-                                ? Colors.white
-                                : primaryColor,
-                          ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: context
+                                  .watch<CategoryProvider>()
+                                  .categoryModelToBeEdited
+                                  .color ??
+                              backgroundColorNumbersAndIcons,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          widget.isToUpdate
+                              ? context
+                                  .watch<CategoryProvider>()
+                                  .categoryModelToBeEdited
+                                  .icon
+                              : FluentIcons.question_24_regular,
+                          size: 30,
+                          color: context
+                                      .watch<CategoryProvider>()
+                                      .categoryModelToBeEdited
+                                      .color !=
+                                  null
+                              ? Colors.white
+                              : grey,
                         ),
                       ),
                     ),
@@ -141,7 +134,7 @@ class _AddEditCategoryState extends State<AddEditCategory> {
                   crossAxisSpacing: 10,
                   children: List.generate(
                     context.read<CategoryProvider>().myIcons.length,
-                    (index) => SelectCategoryIcon(
+                    (index) => SelectCategoryIconButton(
                       index: index,
                       icon: context
                           .read<CategoryProvider>()
@@ -182,7 +175,7 @@ class _AddEditCategoryState extends State<AddEditCategory> {
                             decoration: BoxDecoration(
                                 border: context
                                             .watch<CategoryProvider>()
-                                            .getNewCategoryColorIndex ==
+                                            .selectedColorIndex ==
                                         index
                                     ? Border.all(
                                         color: categoryColors.elementAt(index),
@@ -192,7 +185,7 @@ class _AddEditCategoryState extends State<AddEditCategory> {
                             child: GestureDetector(
                               onTap: () => context
                                   .read<CategoryProvider>()
-                                  .setNewCategoryColorIndex(index),
+                                  .setSelectedColorIndex(index),
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: categoryColors.elementAt(index),
@@ -217,38 +210,31 @@ class _AddEditCategoryState extends State<AddEditCategory> {
                     style: ElevatedButton.styleFrom(
                         elevation: 0, backgroundColor: primaryColor),
                     onPressed: () {
-                      if (widget.isToUpdate) {
-                        if (_formKey.currentState!.validate()) {
-                          if (context
-                                  .read<CategoryProvider>()
-                                  .newCategoryColor !=
-                              null) {
-                            context
-                                .read<CategoryProvider>()
-                                .addNewCategory()
-                                .then((value) => Navigator.pop(context, value));
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                backgroundColor: Colors.transparent,
-                                elevation: 0,
-                                behavior: SnackBarBehavior.floating,
-                                content: CustomSnackBarContent(),
-                              ),
-                            );
-                          }
-                        }
-                      } else {
-                        if (_formKey.currentState!.validate()) {
+                      if (_formKey.currentState!.validate()) {
+                        if (widget.isToUpdate) {
                           context
                               .read<CategoryProvider>()
-                              .updateCategory()
+                              .updateCategory(_textCategoryController.text)
                               .then((value) => Navigator.pop(context, value));
+                        } else {
+                          context
+                              .read<CategoryProvider>()
+                              .addNewCategory()
+                              .then((value) => Navigator.pop(context, value));
+
+                          // ScaffoldMessenger.of(context).showSnackBar(
+                          //   const SnackBar(
+                          //     backgroundColor: Colors.transparent,
+                          //     elevation: 0,
+                          //     behavior: SnackBarBehavior.floating,
+                          //     content: CustomSnackBarContent(),
+                          //   ),
+                          // );
                         }
                       }
                     },
                     child: Text(
-                      widget.isToUpdate ? 'Adicionar' : 'Salvar alterações',
+                      widget.isToUpdate ? 'Salvar alterações' : 'Adicionar',
                     ),
                   ),
                 ),

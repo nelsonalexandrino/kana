@@ -1,14 +1,13 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../utilities/colors.dart';
 
+import '../utilities/colors.dart';
 import '../models/category.dart';
 
 class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
   //Variables
   int _selectedCategoryToEditIndex = 3000;
-
   int _selectedIconForNewCategoryIndex = 3000;
   int _selectedColorIndex = 3000;
   CategoryModel _categoryModelToBeEdited = CategoryModel();
@@ -27,18 +26,22 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   //Methods
-
   Future<bool> updateCategory(String name) async {
     _categoryModelToBeEdited.name = name;
-    _categoriesExpensises.removeAt(_selectedCategoryToEditIndex);
-    _categoriesExpensises.insert(
-        _selectedCategoryToEditIndex, _categoryModelToBeEdited);
+    _categoriesExpensises[_selectedCategoryToEditIndex].name =
+        _categoryModelToBeEdited.name;
+    _categoriesExpensises[_selectedCategoryToEditIndex].color =
+        _categoryModelToBeEdited.color;
+    _categoriesExpensises[_selectedCategoryToEditIndex].colorIndex =
+        _categoryModelToBeEdited.colorIndex;
+    _categoriesExpensises[_selectedCategoryToEditIndex].icon =
+        _categoryModelToBeEdited.icon;
     notifyListeners();
     return true;
   }
 
   Future<bool> addNewCategory() async {
-    _categoriesExpensises.add(_categoryModelToBeEdited);
+    _categoriesExpensises.add(CategoryModel.from(_categoryModelToBeEdited));
     return true;
   }
 
@@ -53,8 +56,8 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
   int get selectedCategoryToEditIndex => _selectedCategoryToEditIndex;
   int get selectedColorIndex => _selectedColorIndex;
 
-  List<CategoryModel> get categories => _categoriesExpensises;
-  List<IconData> get myIcons => _myIcons;
+  List<CategoryModel> get categories => [..._categoriesExpensises];
+  List<IconData> get myIcons => [..._myIcons];
   int get selectedIconForNewCategoryIndex => _selectedIconForNewCategoryIndex;
 
   Map<String, String> get categoriesNames {
@@ -73,7 +76,7 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
     _selectedCategoryToEditIndex = index;
 
     shakeTheList(categoryModel);
-
+    _selectedColorIndex = categoryModel.colorIndex ?? 3000;
     _selectedIconForNewCategoryIndex =
         _myIcons.indexWhere((element) => element == categoryModel.icon);
   }
@@ -102,21 +105,11 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
-//TODO
-
-  String _expensiveAmount = '';
-  String get getExpensiveAmount => _expensiveAmount;
-  void setExpensiveAmount(String number) {
-    _expensiveAmount += number;
-    notifyListeners();
-  }
-
-  void backspace() {
-    if (_expensiveAmount.isNotEmpty) {
-      _expensiveAmount =
-          _expensiveAmount.substring(0, _expensiveAmount.length - 1);
-      notifyListeners();
-    }
+  void leaveNoTrace() {
+    _selectedIconForNewCategoryIndex = 3000;
+    _categoryModelToBeEdited = CategoryModel();
+    _selectedColorIndex = 3000;
+    //notifyListeners();
   }
 
   //Icons
@@ -125,7 +118,6 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
     FluentIcons.cart_24_regular,
     FluentIcons.access_time_24_regular,
     FluentIcons.accessibility_24_regular,
-    FluentIcons.add_24_regular,
     FluentIcons.airplane_24_regular,
     FluentIcons.animal_cat_24_regular,
     FluentIcons.apps_24_regular,
@@ -202,7 +194,7 @@ class CategoryProvider with ChangeNotifier, DiagnosticableTreeMixin {
     FluentIcons.tv_24_regular,
     FluentIcons.wallet_credit_card_24_regular,
     FluentIcons.wrench_screwdriver_24_regular,
-    //FluentIcons.xbox_console_24_regular,
     FluentIcons.xbox_controller_24_regular,
+    FluentIcons.question_24_regular
   ];
 }

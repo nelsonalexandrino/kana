@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// ignore: depend_on_referenced_packages
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
@@ -15,10 +14,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CategoryProvider()),
-        ChangeNotifierProxyProvider<CategoryProvider, ExpenseProvider>(
-          create: (context) => ExpenseProvider(),
-          update: (_, category, expense) => expense!..update(category),
-        ),
+        ChangeNotifierProvider(create: (_) => ExpenseProvider()),
       ],
       child: const MyApp(),
     ),

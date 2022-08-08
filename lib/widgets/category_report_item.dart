@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kana/providers/category_provider.dart';
 
 import 'package:provider/provider.dart';
+
+import '../providers/category_provider.dart';
+import '../utilities/colors.dart';
 
 class CategoryReportItem extends StatelessWidget {
   const CategoryReportItem({
@@ -38,12 +40,12 @@ class CategoryReportItem extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: category.color,
+              color: category.color ?? backgroundColorNumbersAndIcons,
               shape: BoxShape.circle,
             ),
             child: Icon(
               category.icon,
-              color: Colors.white,
+              color: category.color != null ? Colors.white : grey,
             ),
           ),
           const SizedBox(width: 10),

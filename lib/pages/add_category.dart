@@ -1,4 +1,3 @@
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -71,12 +70,10 @@ class _AddEditCategoryState extends State<AddEditCategory> {
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
-                          widget.isToUpdate
-                              ? context
-                                  .watch<CategoryProvider>()
-                                  .categoryModelToBeEdited
-                                  .icon
-                              : FluentIcons.question_24_regular,
+                          context
+                              .watch<CategoryProvider>()
+                              .categoryModelToBeEdited
+                              .icon,
                           size: 30,
                           color: context
                                       .watch<CategoryProvider>()

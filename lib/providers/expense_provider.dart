@@ -1,14 +1,49 @@
 import 'package:flutter/foundation.dart';
 
-import '../providers/category_provider.dart';
+import '../models/category.dart';
 import '../models/expense.dart';
 
 class ExpenseProvider with ChangeNotifier, DiagnosticableTreeMixin {
   String _expensiveAmount = '';
+  String get getExpensiveAmount => _expensiveAmount;
+  CategoryModel? _categoryModel;
+  final _report = {};
+  final List<Expense> _userExpenses = [];
+  final Map<String, List<Expense>> _expensesAsMap = {};
 
-  CategoryProvider _provider = CategoryProvider();
-  update(CategoryProvider provider) {
-    _provider = provider;
+  void setExpensiveAmount(String number) {
+    if (number == '.' && _expensiveAmount.isEmpty) {
+      return;
+    }
+
+    if (number == '.') {
+      if (_expensiveAmount.contains('.')) {
+        return;
+      }
+    }
+
+    if (_expensiveAmount.contains('.')) {
+      var ola = _expensiveAmount.split('.');
+      if (ola[1].length == 2) {
+        return;
+      }
+    }
+
+    _expensiveAmount += number;
+    notifyListeners();
+  }
+
+  void setSelectedCategoryForNewExpense(CategoryModel model) {
+    _categoryModel = model;
+    notifyListeners();
+  }
+
+  void backspace() {
+    if (_expensiveAmount.isNotEmpty) {
+      _expensiveAmount =
+          _expensiveAmount.substring(0, _expensiveAmount.length - 1);
+      notifyListeners();
+    }
   }
 
   @override
@@ -17,13 +52,11 @@ class ExpenseProvider with ChangeNotifier, DiagnosticableTreeMixin {
     properties.add(IntProperty('expense', 0));
   }
 
-  final _report = {};
-  final List<Expense> _userExpenses = [];
-  final Map<String, List<Expense>> _expensesAsMap = {};
-
   List<Expense> get userExpenses => [..._userExpenses];
   Map get expensesAsMap => {..._expensesAsMap};
   Map get report => {..._report};
+  CategoryModel? get selectedCategoryModel => _categoryModel;
+  bool get hasDot => _expensiveAmount.contains('.');
 
   Future<bool> _updateReport(List<Expense> expenses, String categoryID) async {
     if (!_report.containsKey(categoryID)) {
@@ -39,35 +72,29 @@ class ExpenseProvider with ChangeNotifier, DiagnosticableTreeMixin {
     }
 
     _report.update(categoryID, (value) {
-      var ola = _provider.bringTheCategory(categoryID);
       return {
         'totalAmount': totalAmount,
-        'categoryName': ola.name,
-        'categoryIcon': ola.icon,
-        'categoryID': ola.id,
+        'categoryName': _categoryModel?.name,
+        'categoryIcon': _categoryModel?.icon,
+        'categoryID': _categoryModel?.id,
         'totalOfExpenses': expenses.length,
         'treading': treding,
         'tredingValue': tredingValue,
       };
     });
-
     notifyListeners();
-
     return true;
   }
 
   Future<bool> addExpenses() async {
-    if (_provider.getExpensiveAmount.isNotEmpty) {
-      if (_provider.getExpensiveAmount != '0') {
-        double value = double.parse(_provider.getExpensiveAmount);
-//TODO
-        //if (_provider.isCategorySelected) {
-        if (true) {
+    if (_expensiveAmount.isNotEmpty) {
+      if (_expensiveAmount != '0') {
+        double value = double.parse(_expensiveAmount);
+
+        if (_categoryModel != null) {
           var expense = Expense(
             value: value,
-            // category: _provider.categories.elementAt(
-            //   _provider.getSelectedCategoryIndex,
-            // ),
+            category: _categoryModel,
           )..defaultDate();
           _userExpenses.add(
             expense,
@@ -77,11 +104,9 @@ class ExpenseProvider with ChangeNotifier, DiagnosticableTreeMixin {
           if (!_expensesAsMap.containsKey(expense.categoryID)) {
             _expensesAsMap.addAll({expense.categoryID!: []});
           }
-
           List<Expense> lastest =
               _expensesAsMap.update(expense.categoryID!, (value) {
             value.add(expense);
-
             return value;
           });
 
@@ -94,11 +119,8 @@ class ExpenseProvider with ChangeNotifier, DiagnosticableTreeMixin {
     return false;
   }
 
-  void backspace() {
-    if (_expensiveAmount.isNotEmpty) {
-      _expensiveAmount =
-          _expensiveAmount.substring(0, _expensiveAmount.length - 1);
-      notifyListeners();
-    }
+  void leaveNoTraces() {
+    _categoryModel = null;
+    _expensiveAmount = '';
   }
 }

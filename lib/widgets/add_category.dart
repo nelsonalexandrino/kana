@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:kana/providers/category_provider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 
 import '../utilities/colors.dart';
 import '../pages/add_category.dart';
-
-import 'package:provider/provider.dart';
+import '../providers/category_provider.dart';
 
 class AddCategoryButton extends StatefulWidget {
   final double spaceWeHave;
@@ -37,10 +36,12 @@ class _AddCategoryButtonState extends State<AddCategoryButton> {
               showCupertinoModalBottomSheet<bool>(
                 context: context,
                 expand: true,
-                builder: (context) => const AddEditCategory(isToUpdate: true),
+                builder: (context) {
+                  context.read<CategoryProvider>().leaveNoTrace();
+                  return const AddEditCategory(isToUpdate: false);
+                },
               ).then((value) {
-                //TODO
-                // context.read<CategoryProvider>().resetEverything();
+                context.read<CategoryProvider>().leaveNoTrace();
                 if (value ?? false) {
                   Future.delayed(const Duration(milliseconds: 400), () {
                     widget.globalKey!.currentState!.insertItem(

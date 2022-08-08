@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/expense_provider.dart';
@@ -62,7 +63,6 @@ class _AddExpensiveState extends State<AddExpensive> {
           builder: (context, constraints) {
             var maxHeight = constraints.maxHeight;
             var categoryHeight = maxHeight * (13 / 100);
-
             return Column(
               children: [
                 SizedBox(
@@ -94,15 +94,19 @@ class _AddExpensiveState extends State<AddExpensive> {
                                   .id!),
                               position: animation.drive(_tween),
                               child: CategoryButton(
-                                  spaceWeHave: categoryHeight,
-                                  index: index,
-                                  category: context
-                                      .read<CategoryProvider>()
-                                      .categories
-                                      .elementAt(index)),
+                                spaceWeHave: categoryHeight,
+                                index: index,
+                                category: context
+                                    .watch<CategoryProvider>()
+                                    .categories
+                                    .elementAt(index),
+                              ),
                             );
                           },
                         ),
+                        // const SizedBox(
+                        //   width: 50,
+                        // ),
                         AddCategoryButton(
                           spaceWeHave: categoryHeight,
                           icon: FluentIcons.add_24_filled,
@@ -118,10 +122,22 @@ class _AddExpensiveState extends State<AddExpensive> {
                   height: maxHeight * (13 / 100),
                   child: Text(
                     context
-                            .watch<CategoryProvider>()
+                            .watch<ExpenseProvider>()
                             .getExpensiveAmount
                             .isNotEmpty
-                        ? '${context.read<CategoryProvider>().getExpensiveAmount} MT'
+                        ? NumberFormat.currency(
+                                locale: 'fr',
+                                decimalDigits:
+                                    context.watch<ExpenseProvider>().hasDot
+                                        ? 2
+                                        : 0,
+                                symbol: 'MT',
+                                name: 'moz')
+                            .format(
+                            double.parse(context
+                                .read<ExpenseProvider>()
+                                .getExpensiveAmount),
+                          )
                         : '',
                     style: Theme.of(context)
                         .textTheme
@@ -179,13 +195,10 @@ class _AddExpensiveState extends State<AddExpensive> {
                             .then((value) => {
                                   if (value)
                                     {
-                                      // context
-                                      //     .read<CategoryProvider>()
-                                      //     .resetSelectedCategory(),
-                                      // context
-                                      //     .read<CategoryProvider>()
-                                      //     .resetEverything(),
-                                      // Navigator.pop(context, value)
+                                      context
+                                          .read<ExpenseProvider>()
+                                          .leaveNoTraces(),
+                                      Navigator.pop(context, value)
                                     }
                                 });
                       },

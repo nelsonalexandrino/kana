@@ -1,7 +1,6 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-
-import '../utilities/colors.dart';
 
 class CategoryModel with ChangeNotifier {
   final _uuid = const Uuid();
@@ -13,7 +12,10 @@ class CategoryModel with ChangeNotifier {
   int? colorIndex;
 
   CategoryModel(
-      {this.name = '', this.icon = Icons.money, this.color, this.colorIndex}) {
+      {this.name = '',
+      this.icon = FluentIcons.question_24_regular,
+      this.color,
+      this.colorIndex}) {
     _id = _uuid.v4();
     //color = grey;
   }
@@ -42,9 +44,15 @@ class CategoryModel with ChangeNotifier {
 
   factory CategoryModel.from(CategoryModel model) {
     return CategoryModel(
-        color: model.color,
-        colorIndex: model.colorIndex,
-        icon: model.icon,
-        name: model.name);
+      color: model.color,
+      colorIndex: model.colorIndex,
+      icon: model.icon,
+      name: model.name,
+    );
+  }
+
+  @override
+  String toString() {
+    return '\nName: $name\nIcon: $icon\nID: $id\nColor: $color';
   }
 }

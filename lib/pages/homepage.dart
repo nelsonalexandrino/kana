@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:kana/widgets/custom_snackbar_content.dart';
 import 'package:lottie/lottie.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/expense_provider.dart';
+import '../widgets/custom_snackbar_content.dart';
 import '../widgets/category_report_item.dart';
 import '../pages/add_expensive.dart';
 import '../utilities/colors.dart';

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-// ignore: depend_on_referenced_packages
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 import '../models/category.dart';
 import '../pages/add_category.dart';
 import '../utilities/colors.dart';
 import '../providers/category_provider.dart';
+import '../providers/expense_provider.dart';
 
-// ignore: must_be_immutable
 class CategoryButton extends StatefulWidget {
   final double spaceWeHave;
   final int index;
@@ -53,9 +52,9 @@ class _CategoryButtonState extends State<CategoryButton>
         children: [
           GestureDetector(
             onTap: () {
-              // context
-              //     .read<CategoryProvider>()
-              //     .setSelectedCategoryToEditIndex(widget.index);
+              context
+                  .read<ExpenseProvider>()
+                  .setSelectedCategoryForNewExpense(widget.category!);
             },
             onLongPress: () {
               showCupertinoModalBottomSheet(
@@ -97,34 +96,33 @@ class _CategoryButtonState extends State<CategoryButton>
                 width: maxHeight / 2 + 3,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  // border:
-
-                  // Border.all(
-                  //   color: context
-                  //               .watch<CategoryProvider>()
-                  //               .getSelectedCategoryIndex ==
-                  //           widget.index
-                  //       ? primaryColor
-                  //       : Colors.transparent,
-                  // ),
+                  border: Border.all(
+                    color: context
+                                .watch<ExpenseProvider>()
+                                .selectedCategoryModel
+                                ?.id ==
+                            widget.category?.id
+                        ? context
+                                .watch<ExpenseProvider>()
+                                .selectedCategoryModel!
+                                .color ??
+                            primaryColor
+                        : Colors.transparent,
+                  ),
                 ),
                 padding: const EdgeInsets.all(2),
-                child: PhysicalModel(
-                  color: eleventionShadow == 0.0 ? Colors.white : Colors.black,
-                  shape: BoxShape.circle,
-                  elevation: eleventionShadow,
-                  child: Container(
-                    height: maxHeight / 2,
-                    width: maxHeight / 2,
-                    decoration: BoxDecoration(
-                      color: backgroundColorNumbersAndIcons,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      widget.category!.icon,
-                      size: maxHeight / 4 > 24.0 ? 24 : maxHeight / 4,
-                      color: grey,
-                    ),
+                child: Container(
+                  height: maxHeight / 2,
+                  width: maxHeight / 2,
+                  decoration: BoxDecoration(
+                    color: widget.category!.color ??
+                        backgroundColorNumbersAndIcons,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    widget.category!.icon,
+                    size: maxHeight / 4 > 24.0 ? 24 : maxHeight / 4,
+                    color: widget.category!.color != null ? Colors.white : grey,
                   ),
                 ),
               ),

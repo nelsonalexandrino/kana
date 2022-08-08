@@ -3,9 +3,10 @@ import 'dart:ui' as ui;
 
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:kana/pages/homepage.dart';
-import 'package:kana/utilities/colors.dart';
-import 'package:kana/widgets/indicator.dart';
+
+import '../pages/homepage.dart';
+import '../utilities/colors.dart';
+import '../widgets/indicator.dart';
 
 class LaunchPage extends StatefulWidget {
   const LaunchPage({super.key});

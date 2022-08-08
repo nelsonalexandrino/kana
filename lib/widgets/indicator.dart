@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kana/utilities/colors.dart';
+
+import '../utilities/colors.dart';
 
 // ignore: must_be_immutable
 class Indicator extends StatelessWidget {

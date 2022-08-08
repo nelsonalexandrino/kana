@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kana/providers/category_provider.dart';
-import 'package:kana/utilities/colors.dart';
 
 import 'package:provider/provider.dart';
+
+import '../providers/expense_provider.dart';
+import '../utilities/colors.dart';
 
 // ignore: must_be_immutable
 class DialNumber extends StatefulWidget {
@@ -28,9 +29,9 @@ class _DialNumberState extends State<DialNumber> {
       child: IconButton(
         onPressed: widget.number.isNotEmpty
             ? () => context
-                .read<CategoryProvider>()
+                .read<ExpenseProvider>()
                 .setExpensiveAmount(widget.number)
-            : () => context.read<CategoryProvider>().backspace(),
+            : () => context.read<ExpenseProvider>().backspace(),
         iconSize: 40,
         alignment: Alignment.center,
         icon: widget.index,

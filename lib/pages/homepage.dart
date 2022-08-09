@@ -1,6 +1,9 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:intl/intl.dart';
+import 'package:kana/pages/category_expense_details.dart';
 import 'package:lottie/lottie.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
@@ -20,14 +23,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // final GlobalKey<AnimatedListState> _myListkey =
-  //     GlobalKey<AnimatedListState>();
-
-  // final Tween<Offset> _tween =
-  //     Tween(begin: const Offset(0, 0.3), end: const Offset(0, 0));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -48,16 +47,27 @@ class _HomePageState extends State<HomePage> {
                     ) {
                       Map ola = provider.report.values.elementAt(index);
 
-                      return CategoryReportItem(
-                        //categoryName: ola['categoryName'],
-                        trending: ola['treading']
-                            ? FluentIcons.arrow_trending_down_24_regular
-                            : FluentIcons.arrow_trending_24_regular,
-                        trendingTendency: '-2%',
-                        moneySpent: '${ola['totalAmount']} MT',
-                        categoryID: ola['categoryID'],
-                        //categoryIcon: ola['categoryIcon'],
-                        totalOfExpenses: ola['totalOfExpenses'],
+                      return OpenContainer(
+                        closedBuilder: (context, action) => CategoryReportItem(
+                          trending: ola['treading']
+                              ? FluentIcons.arrow_trending_down_24_regular
+                              : FluentIcons.arrow_trending_24_regular,
+                          trendingTendency: '-2%',
+                          moneySpent: NumberFormat.currency(
+                                  locale: 'fr',
+                                  decimalDigits: 2,
+                                  symbol: 'MT',
+                                  name: 'moz')
+                              .format(
+                            double.parse(ola['totalAmount'].toString()),
+                          ),
+                          categoryID: ola['categoryID'],
+                          totalOfExpenses: ola['totalOfExpenses'],
+                        ),
+                        closedElevation: 0,
+                        openElevation: 0,
+                        openBuilder: (context, action) =>
+                            const CategoryExpenseDetails(),
                       );
                     },
                   );
@@ -74,7 +84,6 @@ class _HomePageState extends State<HomePage> {
             expand: true,
             builder: (context) => const AddExpensive(),
           );
-          //Navigator.pushNamed(context, AddExpensive.routeName);
         },
         backgroundColor: primaryColor,
         elevation: 2.0,

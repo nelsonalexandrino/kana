@@ -8,20 +8,16 @@ import '../utilities/colors.dart';
 class CategoryReportItem extends StatelessWidget {
   const CategoryReportItem({
     Key? key,
-    //this.categoryName,
     this.trending,
     this.trendingTendency,
     this.moneySpent,
-    //this.categoryIcon,
     this.totalOfExpenses,
     this.categoryID,
   }) : super(key: key);
 
-  //final String? categoryName;
   final IconData? trending;
   final String? trendingTendency;
   final String? moneySpent;
-  //final IconData? categoryIcon;
   final int? totalOfExpenses;
   final String? categoryID;
 

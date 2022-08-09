@@ -8,11 +8,9 @@ import '../widgets/select_category.dart';
 
 class AddEditCategory extends StatefulWidget {
   final bool isToUpdate;
-  //final CategoryModel? categoryModel;
 
   const AddEditCategory({
     this.isToUpdate = false,
-    //this.categoryModel,
     super.key,
   });
 

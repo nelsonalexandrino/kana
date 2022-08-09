@@ -10,12 +10,15 @@ class CategoryModel with ChangeNotifier {
   String? _id;
   Color? color;
   int? colorIndex;
+  double? limit;
 
-  CategoryModel(
-      {this.name = '',
-      this.icon = FluentIcons.question_24_regular,
-      this.color,
-      this.colorIndex}) {
+  CategoryModel({
+    this.name = '',
+    this.icon = FluentIcons.question_24_regular,
+    this.color,
+    this.colorIndex,
+    this.limit = 100000,
+  }) {
     _id = _uuid.v4();
     //color = grey;
   }
@@ -40,6 +43,10 @@ class CategoryModel with ChangeNotifier {
     notifyListeners();
   }
 
+  void setLimit(double newLimit) {
+    limit = newLimit;
+  }
+
   String? get id => _id;
 
   factory CategoryModel.from(CategoryModel model) {
@@ -48,11 +55,12 @@ class CategoryModel with ChangeNotifier {
       colorIndex: model.colorIndex,
       icon: model.icon,
       name: model.name,
+      limit: model.limit,
     );
   }
 
   @override
   String toString() {
-    return '\nName: $name\nIcon: $icon\nID: $id\nColor: $color';
+    return '\nName: $name\nIcon: $icon\nID: $id\nColor: $color\nLimit: $limit';
   }
 }

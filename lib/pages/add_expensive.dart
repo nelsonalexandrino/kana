@@ -53,7 +53,7 @@ class _AddExpensiveState extends State<AddExpensive> {
               //context.read<CategoryProvider>().resetSelectedCategory();
               Navigator.pop(context);
             },
-            icon: const Icon(FluentIcons.dismiss_20_filled,
+            icon: const Icon(FluentIcons.dismiss_24_filled,
                 color: Color(0xFF393939)),
           )
         ],

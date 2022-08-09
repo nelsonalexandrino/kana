@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 
 import '../utilities/colors.dart';
-import '../widgets/chart_category_details.dart';
 
 class CategoryExpenseDetails extends StatelessWidget {
   const CategoryExpenseDetails({super.key});
@@ -25,9 +24,10 @@ class CategoryExpenseDetails extends StatelessWidget {
           child: Column(
         children: [
           Card(
-              child: Row(
-            children: const [ChartCategoryDetails()],
-          )),
+            child: Row(
+              children: const [],
+            ),
+          ),
         ],
       )),
     );

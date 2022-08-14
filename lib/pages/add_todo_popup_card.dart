@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../utilities/colors.dart';
+import '../utilities/defaults.dart';
 import '../widgets/select_category.dart';
 import '../utilities/custom_animation.dart';
 

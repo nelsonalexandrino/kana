@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/category_provider.dart';
 
-import '../utilities/colors.dart';
+import '../utilities/defaults.dart';
 import '../widgets/select_category.dart';
 
 class AddEditCategory extends StatefulWidget {

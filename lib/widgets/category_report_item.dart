@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/category_provider.dart';
-import '../utilities/colors.dart';
+import '../utilities/defaults.dart';
 
 class CategoryReportItem extends StatelessWidget {
   const CategoryReportItem({
@@ -28,7 +28,7 @@ class CategoryReportItem extends StatelessWidget {
         .categories
         .firstWhere((element) => element.id == categoryID);
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       margin: const EdgeInsets.only(bottom: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

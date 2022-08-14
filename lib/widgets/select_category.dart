@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../utilities/colors.dart';
+import '../utilities/defaults.dart';
 import '../providers/category_provider.dart';
 
 // ignore: must_be_immutable

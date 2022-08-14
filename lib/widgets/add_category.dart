@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
-import '../utilities/colors.dart';
+import '../utilities/defaults.dart';
 import '../pages/add_category.dart';
 import '../providers/category_provider.dart';
 

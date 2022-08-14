@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../models/category.dart';
 import '../pages/add_category.dart';
-import '../utilities/colors.dart';
+import '../utilities/defaults.dart';
 import '../providers/category_provider.dart';
 import '../providers/expense_provider.dart';
 

@@ -8,6 +8,7 @@ import '../pages/homepage.dart';
 import '../providers/expense_provider.dart';
 import '../providers/category_provider.dart';
 import '../pages/launch_page.dart';
+import '../providers/home_report_provider.dart';
 
 void main() {
   runApp(
@@ -15,6 +16,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => CategoryProvider()),
         ChangeNotifierProvider(create: (_) => ExpenseProvider()),
+        ChangeNotifierProvider(create: (_) => ReportProvider()),
       ],
       child: const MyApp(),
     ),

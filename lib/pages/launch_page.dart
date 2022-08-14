@@ -5,7 +5,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/homepage.dart';
-import '../utilities/colors.dart';
+import '../utilities/defaults.dart';
 import '../widgets/indicator.dart';
 
 class LaunchPage extends StatefulWidget {
@@ -37,15 +37,21 @@ class _LaunchPageState extends State<LaunchPage> {
 
   @override
   Widget build(BuildContext context) {
+    //var pixelRatio = MediaQuery.of(context).devicePixelRatio;
+    var aspectRatio = MediaQuery.of(context).size.aspectRatio;
+    //var textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    var deviceHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: CustomPaint(
-        foregroundPainter: LaunchPagePainter(),
-        child: _controlsLauch(context),
+        foregroundPainter: LaunchPagePainter(
+            aspectRatio: aspectRatio, deviceHeight: deviceHeight),
+        child: _controlsLauch(context, aspectRatio),
       ),
     );
   }
 
-  _controlsLauch(BuildContext context) {
+  _controlsLauch(BuildContext context, double aspectRatio) {
     return SafeArea(
       child: Stack(
         children: [
@@ -72,13 +78,13 @@ class _LaunchPageState extends State<LaunchPage> {
                         shape: const CircleBorder(),
                         side: BorderSide(
                           color: primaryColor,
-                          width: 8.0,
+                          width: 6.0,
                         ),
                       ),
                       child: Container(
                         margin: const EdgeInsets.only(
-                          top: 15,
-                          bottom: 15,
+                          top: 10,
+                          bottom: 10,
                           left: 15,
                           right: 10,
                         ),
@@ -115,12 +121,13 @@ class _LaunchPageState extends State<LaunchPage> {
                       shape: const CircleBorder(),
                       side: BorderSide(
                         color: primaryColor,
-                        width: 8.0,
+                        width: 6.0,
                       ),
                     ),
                     child: Container(
+                      height: 40 * (1 - aspectRatio),
                       margin: const EdgeInsets.only(
-                        top: 15,
+                        top: 10,
                         bottom: 15,
                         left: 10,
                         right: 15,
@@ -142,8 +149,18 @@ class _LaunchPageState extends State<LaunchPage> {
 }
 
 class LaunchPagePainter extends CustomPainter {
+  LaunchPagePainter({
+    required this.aspectRatio,
+    required this.deviceHeight,
+  });
+  final double aspectRatio;
+  final double deviceHeight;
+
   @override
   void paint(Canvas canvas, Size size) {
+    final double headlineBaseFontSize = 50 * (1 - aspectRatio);
+    final double subtitleBaseFontSize = 28 * (1 - aspectRatio);
+
     var bushThirdCircle = Paint()
       ..color = const Color(0xFF6658A8)
       ..strokeCap = StrokeCap.round
@@ -162,14 +179,15 @@ class LaunchPagePainter extends CustomPainter {
       ..strokeWidth = 10;
 
     canvas.drawArc(
-        Rect.fromCenter(
-            center: Offset(size.width * .14, size.height * .15),
-            width: 360,
-            height: 390),
-        -pi / 2,
-        50,
-        false,
-        bushFirstCircle);
+      Rect.fromCenter(
+          center: Offset(size.width * .12, size.height * .15),
+          width: size.width * .9,
+          height: size.height * .5),
+      -pi / 2,
+      50,
+      false,
+      bushFirstCircle,
+    );
 
     var bushSecondCircle = Paint()
       ..color = const Color(0xFFFAC02D)
@@ -177,27 +195,29 @@ class LaunchPagePainter extends CustomPainter {
       ..style = PaintingStyle.fill
       ..strokeWidth = 10;
 
-    canvas.drawCircle(
-        Offset(size.width * .11, size.height * .13), 140, bushSecondCircle);
+    canvas.drawCircle(Offset(size.width * .11, size.height * .13),
+        size.height < 900 ? 100 : 140, bushSecondCircle);
 
     var paragraphHeaderBuilder = ui.ParagraphBuilder(ui.ParagraphStyle())
       ..pushStyle(ui.TextStyle(
           color: Colors.black,
-          fontSize: 25,
+          fontSize: headlineBaseFontSize,
           letterSpacing: .2,
           fontWeight: ui.FontWeight.bold))
       ..addText('Vamos descobrir como gerir suas finanças');
     var paragraphHeader = paragraphHeaderBuilder.build();
-    paragraphHeader.layout(ui.ParagraphConstraints(width: size.width * .8));
+    paragraphHeader.layout(ui.ParagraphConstraints(width: size.width * .9));
     canvas.drawParagraph(paragraphHeader, Offset(20, size.height * .66));
 
     var paragraphBuilder = ui.ParagraphBuilder(ui.ParagraphStyle())
-      ..pushStyle(
-          ui.TextStyle(color: Colors.black87, fontSize: 16, letterSpacing: .2))
+      ..pushStyle(ui.TextStyle(
+          color: Colors.black87,
+          fontSize: subtitleBaseFontSize,
+          letterSpacing: .2))
       ..addText(
           'Vamos encontrar uma maneira de gerir suas finanças para que sejam fáceis de entender e organizadas ordenadamente');
     var paragraph = paragraphBuilder.build();
-    paragraph.layout(ui.ParagraphConstraints(width: size.width * .8));
+    paragraph.layout(ui.ParagraphConstraints(width: size.width * .9));
     canvas.drawParagraph(paragraph, Offset(20, size.height * .76));
 
     var circle1 = Paint()
@@ -206,30 +226,35 @@ class LaunchPagePainter extends CustomPainter {
       ..style = PaintingStyle.fill
       ..strokeWidth = 10;
     canvas.drawCircle(Offset(size.width * .15, size.height * .55), 10, circle1);
+
     var circle2 = Paint()
       ..color = primaryColor
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 12;
     canvas.drawCircle(Offset(size.width * .58, size.height * .33), 12, circle2);
+
     var circle3 = Paint()
       ..color = const Color(0xFFFAC02D)
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 15;
     canvas.drawCircle(Offset(size.width * .39, size.height * .48), 15, circle3);
+
     var circle4 = Paint()
       ..color = const Color(0xFF6658A8)
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 8;
     canvas.drawCircle(Offset(size.width * .94, size.height * .31), 8, circle4);
+
     var circle5 = Paint()
       ..color = primaryColor
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 6;
     canvas.drawCircle(Offset(size.width * .84, size.height * .45), 6, circle5);
+
     var circle6 = Paint()
       ..color = const Color(0xFF6658A8)
       ..strokeCap = StrokeCap.round

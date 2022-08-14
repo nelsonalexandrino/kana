@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/expense_provider.dart';
-import '../utilities/colors.dart';
+import '../utilities/defaults.dart';
 import '../providers/category_provider.dart';
 import '../widgets/add_category.dart';
 import '../widgets/category_button.dart';

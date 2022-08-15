@@ -8,9 +8,11 @@ Color backgroundColorNumbersAndIcons = const Color(0xFFF8F2F7);
 
 Color grey = const Color(0xff616657);
 
+Color lightGrey = const Color(0xFFF2F6F9);
+
 Color maybePrimary = const Color(0xFF0139A5);
 
-Color maybeGreen = Color(0xFF22A45D);
+Color maybeGreen = const Color(0xFF22A45D);
 
 List<Color> categoryColors = const [
   Color(0xFF1D1E23),

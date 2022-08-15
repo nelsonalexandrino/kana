@@ -123,4 +123,63 @@ class ExpenseProvider with ChangeNotifier, DiagnosticableTreeMixin {
     _categoryModel = null;
     _expensiveAmount = '';
   }
+
+  var data = [
+    {
+      'monthID': 'lksmksknskgksg',
+      'monthName': 'Janeiro',
+      'year': '2022',
+      'monthIndex': '1',
+      'expenses': [
+        {
+          'day': '02',
+          'expenses': [
+            {
+              'categoryId': '',
+              'expenseValue': '',
+              'expenseID': '',
+              'dateSpent': '',
+            },
+            {
+              'categoryId': '',
+              'expenseValue': '',
+              'expenseID': '',
+              'dateSpent': '',
+            },
+          ]
+        },
+        {
+          'day': '03',
+          'expenses': [
+            {
+              'categoryId': '',
+              'expenseValue': '',
+              'expenseID': '',
+              'dateSpent': '',
+            },
+            {
+              'categoryId': '',
+              'expenseValue': '',
+              'expenseID': '',
+              'dateSpent': '',
+            },
+          ]
+        },
+      ],
+      'report': [
+        {
+          'categoryId': 'dknkfnsjknfjsnv',
+          'report': {
+            'categoryID': '',
+            'totalAmount': 'f',
+            'categoryName': 'k',
+            'categoryIcon': 'l',
+            'totalOfExpenses': 'f',
+            'treading': 't',
+            'tredingValue': 't',
+          }
+        }
+      ]
+    }
+  ];
 }

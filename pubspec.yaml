@@ -41,6 +41,10 @@ dependencies:
   flutter_svg: ^1.1.2
   graphic: ^0.10.6
   syncfusion_flutter_charts: ^20.2.43
+  syncfusion_flutter_datepicker: ^20.2.43
+  syncfusion_flutter_xlsio: ^20.2.43-beta
+  syncfusion_flutter_barcodes: ^20.2.43
+  firebase_auth: ^3.6.3
 
 flutter_native_splash:
   color: "#FFFFFF"

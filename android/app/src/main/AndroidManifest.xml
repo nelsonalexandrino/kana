@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.kana">
+    package="mz.co.kana.kana">
    <application
         android:label="kana"
         android:name="${applicationName}"

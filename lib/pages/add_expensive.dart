@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/expense_provider.dart';
-import '../utilities/defaults.dart';
 import '../providers/category_provider.dart';
 import '../widgets/add_category.dart';
 import '../widgets/category_button.dart';
@@ -151,25 +150,26 @@ class _AddExpensiveState extends State<AddExpensive> {
                       constraints.maxWidth > 320 ? 320 : constraints.maxWidth,
                   child: Center(
                     child: Table(
-                        defaultVerticalAlignment:
-                            TableCellVerticalAlignment.middle,
-                        children: [
-                          TableRow(children: [
-                            DialNumber(const Text('1'), '1'),
-                            DialNumber(const Text('2'), '2'),
-                            DialNumber(const Text('3'), '3'),
-                          ]),
-                          TableRow(children: [
-                            DialNumber(const Text('4'), '4'),
-                            DialNumber(const Text('5'), '5'),
-                            DialNumber(const Text('6'), '6'),
-                          ]),
-                          TableRow(children: [
-                            DialNumber(const Text('7'), '7'),
-                            DialNumber(const Text('8'), '8'),
-                            DialNumber(const Text('9'), '9'),
-                          ]),
-                          TableRow(children: [
+                      defaultVerticalAlignment:
+                          TableCellVerticalAlignment.middle,
+                      children: [
+                        TableRow(children: [
+                          DialNumber(const Text('1'), '1'),
+                          DialNumber(const Text('2'), '2'),
+                          DialNumber(const Text('3'), '3'),
+                        ]),
+                        TableRow(children: [
+                          DialNumber(const Text('4'), '4'),
+                          DialNumber(const Text('5'), '5'),
+                          DialNumber(const Text('6'), '6'),
+                        ]),
+                        TableRow(children: [
+                          DialNumber(const Text('7'), '7'),
+                          DialNumber(const Text('8'), '8'),
+                          DialNumber(const Text('9'), '9'),
+                        ]),
+                        TableRow(
+                          children: [
                             DialNumber(const Text('.'), '.'),
                             DialNumber(const Text('0'), '0'),
                             DialNumber(
@@ -178,36 +178,38 @@ class _AddExpensiveState extends State<AddExpensive> {
                                   size: 20,
                                 ),
                                 ''),
-                          ]),
-                        ]),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: SizedBox(
-                    height: 50,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        context
-                            .read<ExpenseProvider>()
-                            .addExpenses()
-                            .then((value) => {
-                                  if (value)
-                                    {
-                                      context
-                                          .read<ExpenseProvider>()
-                                          .leaveNoTraces(),
-                                      Navigator.pop(context, value)
-                                    }
-                                });
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryColor, elevation: 0),
-                      child: const Text('Adicionar'),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                //   child: SizedBox(
+                //     height: 50,
+                //     width: double.infinity,
+                //     child: ElevatedButton(
+                //       onPressed: () {
+                //         context
+                //             .read<ExpenseProvider>()
+                //             .addExpenses()
+                //             .then((value) => {
+                //                   if (value)
+                //                     {
+                //                       context
+                //                           .read<ExpenseProvider>()
+                //                           .leaveNoTraces(),
+                //                       Navigator.pop(context, value)
+                //                     }
+                //                 });
+                //       },
+                //       style: ElevatedButton.styleFrom(
+                //           backgroundColor: primaryColor, elevation: 0),
+                //       child: const Text('Adicionar'),
+                //     ),
+                //   ),
+                // ),
               ],
             );
           },

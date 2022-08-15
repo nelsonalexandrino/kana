@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
@@ -49,6 +47,7 @@ class _HomePageState extends State<HomePage>
   @override
   void dispose() {
     _scrollController.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -79,7 +78,10 @@ class _HomePageState extends State<HomePage>
                 elevation: 0,
                 //collapsedHeight: 50,
                 expandedHeight: constraints.maxHeight * .5,
-
+                stretch: true,
+                onStretchTrigger: () async {
+                  print('kkkfdkfkdfd');
+                },
                 //floating: true,
                 pinned: true,
 
@@ -262,23 +264,110 @@ class _HomePageState extends State<HomePage>
                 ),
               ),
               SliverPersistentHeader(
-                delegate: SliverMonths(tabController: _tabController),
+                delegate: SliverMonths(
+                    tabController: _tabController,
+                    scrollController: _scrollController),
                 pinned: true,
               ),
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      height: 60,
-                      color: Color((Random().nextDouble() * 0xFFFFFF).toInt())
-                          .withOpacity(1.0),
-                      //color: Colors.red,
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      key: ValueKey(index),
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(
+                              top: 20, bottom: 20, left: 16),
+                          child: Text(
+                            yearMonths.elementAt(index),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Center(
+                                child: ListView(
+                                  padding: const EdgeInsets.all(8.0),
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  children: [
+                                    const Center(child: Text('Terça')),
+                                    const Center(
+                                      child: Text(
+                                        '4',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 10,
+                                      width: 10,
+                                      margin: const EdgeInsets.only(top: 6),
+                                      decoration: BoxDecoration(
+                                        color: maybePrimary,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    ...List.generate(
+                                      17,
+                                      (index) => Center(
+                                        child: Container(
+                                          margin: const EdgeInsets.only(top: 5),
+                                          height: 15,
+                                          width: 3,
+                                          decoration: BoxDecoration(
+                                            color: grey.withOpacity(.6),
+                                            borderRadius:
+                                                BorderRadius.circular(2),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Container(
+                                margin: const EdgeInsets.only(right: 15),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(7),
+                                  child: Column(children: [
+                                    ...List.generate(
+                                      7,
+                                      (index) => Container(
+                                        height: 60,
+                                        color: Colors.amber,
+                                        // color: Color((Random().nextDouble() *
+                                        //             0xFFFFFF)
+                                        //         .toInt())
+                                        //     .withOpacity(1.0),
+                                      ),
+                                    )
+                                  ]),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
                     );
                   },
+                  //addAutomaticKeepAlives: true,
                   childCount: yearMonths.length,
                 ),
-              )
+              ),
             ],
           );
         },

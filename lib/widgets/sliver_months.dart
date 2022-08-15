@@ -6,9 +6,10 @@ import '../utilities/defaults.dart';
 import '../providers/home_report_provider.dart';
 
 class SliverMonths extends SliverPersistentHeaderDelegate {
-  SliverMonths({required this.tabController});
+  SliverMonths({required this.tabController, required this.scrollController});
 
   final TabController tabController;
+  final ScrollController scrollController;
 
   //final int selectedIndex;
 
@@ -26,7 +27,7 @@ class SliverMonths extends SliverPersistentHeaderDelegate {
         ),
         boxShadow: [shadow2],
       ),
-      child: Months(tabController),
+      child: Months(tabController, scrollController),
     );
   }
 
@@ -43,9 +44,10 @@ class SliverMonths extends SliverPersistentHeaderDelegate {
 }
 
 class Months extends StatefulWidget {
-  Months(this.tabController, {super.key});
+  const Months(this.tabController, this.scrollController, {super.key});
 
-  TabController tabController;
+  final TabController tabController;
+  final ScrollController scrollController;
 
   @override
   State<Months> createState() => _MonthsState();
@@ -59,7 +61,11 @@ class _MonthsState extends State<Months> {
       isScrollable: true,
       //indicator: BoxDecoration(shape: BoxShape.rectangle, color: Colors.orange),
       indicatorColor: Colors.transparent,
-      onTap: (value) => context.read<ReportProvider>().setSelectedMonth(value),
+      onTap: (value) {
+        context.read<ReportProvider>().setSelectedMonth(value);
+        widget.scrollController.animateTo(value * 600,
+            duration: const Duration(milliseconds: 500), curve: Curves.ease);
+      },
       tabs: [
         ...List.generate(
           yearMonths.length,
@@ -67,13 +73,14 @@ class _MonthsState extends State<Months> {
             child: Text(
               yearMonths.elementAt(index),
               style: TextStyle(
-                  color: context.watch<ReportProvider>().selectedMonth == index
-                      ? Colors.black
-                      : grey,
-                  fontWeight:
-                      context.watch<ReportProvider>().selectedMonth == index
-                          ? FontWeight.bold
-                          : null),
+                color: context.watch<ReportProvider>().selectedMonth == index
+                    ? Colors.black
+                    : grey,
+                fontWeight:
+                    context.watch<ReportProvider>().selectedMonth == index
+                        ? FontWeight.bold
+                        : null,
+              ),
             ),
           ),
         )

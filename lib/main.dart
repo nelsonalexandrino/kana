@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
+// ignore: depend_on_referenced_packages
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 import '../pages/add_expensive.dart';
 import '../pages/homepage.dart';
 import '../providers/expense_provider.dart';
@@ -10,7 +14,11 @@ import '../providers/category_provider.dart';
 import '../pages/launch_page.dart';
 import '../providers/home_report_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MultiProvider(
       providers: [

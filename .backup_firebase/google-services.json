@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "509580792755",
+    "project_id": "kana-expenses",
+    "storage_bucket": "kana-expenses.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509580792755:android:632383397423fc366271c6",
+        "android_client_info": {
+          "package_name": "mz.co.kana.kana"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "509580792755-bo1nap4e2uhgel7gf0pu1ldrubpudhvp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCW6dVJtoZXg7zWddHsoNBbr7bvjHWxAlI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "509580792755-bo1nap4e2uhgel7gf0pu1ldrubpudhvp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

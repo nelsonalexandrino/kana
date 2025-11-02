@@ -22,11 +22,15 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CategoryModel {
   String get id => throw _privateConstructorUsedError;
+  String get householdId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   int get iconCodePoint => throw _privateConstructorUsedError;
   String get iconFontFamily => throw _privateConstructorUsedError;
   int get colorValue => throw _privateConstructorUsedError;
   double get limit => throw _privateConstructorUsedError;
+  CategoryType get type => throw _privateConstructorUsedError;
+  String get createdBy => throw _privateConstructorUsedError;
+  bool get isDefault => throw _privateConstructorUsedError;
 
   /// Serializes this CategoryModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,11 +51,15 @@ abstract class $CategoryModelCopyWith<$Res> {
   @useResult
   $Res call({
     String id,
+    String householdId,
     String name,
     int iconCodePoint,
     String iconFontFamily,
     int colorValue,
     double limit,
+    CategoryType type,
+    String createdBy,
+    bool isDefault,
   });
 }
 
@@ -71,17 +79,25 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
   @override
   $Res call({
     Object? id = null,
+    Object? householdId = null,
     Object? name = null,
     Object? iconCodePoint = null,
     Object? iconFontFamily = null,
     Object? colorValue = null,
     Object? limit = null,
+    Object? type = null,
+    Object? createdBy = null,
+    Object? isDefault = null,
   }) {
     return _then(
       _value.copyWith(
             id: null == id
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            householdId: null == householdId
+                ? _value.householdId
+                : householdId // ignore: cast_nullable_to_non_nullable
                       as String,
             name: null == name
                 ? _value.name
@@ -103,6 +119,18 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
                 ? _value.limit
                 : limit // ignore: cast_nullable_to_non_nullable
                       as double,
+            type: null == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as CategoryType,
+            createdBy: null == createdBy
+                ? _value.createdBy
+                : createdBy // ignore: cast_nullable_to_non_nullable
+                      as String,
+            isDefault: null == isDefault
+                ? _value.isDefault
+                : isDefault // ignore: cast_nullable_to_non_nullable
+                      as bool,
           )
           as $Val,
     );
@@ -120,11 +148,15 @@ abstract class _$$CategoryModelImplCopyWith<$Res>
   @useResult
   $Res call({
     String id,
+    String householdId,
     String name,
     int iconCodePoint,
     String iconFontFamily,
     int colorValue,
     double limit,
+    CategoryType type,
+    String createdBy,
+    bool isDefault,
   });
 }
 
@@ -143,17 +175,25 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? householdId = null,
     Object? name = null,
     Object? iconCodePoint = null,
     Object? iconFontFamily = null,
     Object? colorValue = null,
     Object? limit = null,
+    Object? type = null,
+    Object? createdBy = null,
+    Object? isDefault = null,
   }) {
     return _then(
       _$CategoryModelImpl(
         id: null == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        householdId: null == householdId
+            ? _value.householdId
+            : householdId // ignore: cast_nullable_to_non_nullable
                   as String,
         name: null == name
             ? _value.name
@@ -175,6 +215,18 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
             ? _value.limit
             : limit // ignore: cast_nullable_to_non_nullable
                   as double,
+        type: null == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as CategoryType,
+        createdBy: null == createdBy
+            ? _value.createdBy
+            : createdBy // ignore: cast_nullable_to_non_nullable
+                  as String,
+        isDefault: null == isDefault
+            ? _value.isDefault
+            : isDefault // ignore: cast_nullable_to_non_nullable
+                  as bool,
       ),
     );
   }
@@ -185,11 +237,15 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
 class _$CategoryModelImpl implements _CategoryModel {
   const _$CategoryModelImpl({
     required this.id,
+    required this.householdId,
     required this.name,
     required this.iconCodePoint,
     required this.iconFontFamily,
     required this.colorValue,
     this.limit = 100000.0,
+    this.type = CategoryType.household,
+    required this.createdBy,
+    this.isDefault = false,
   });
 
   factory _$CategoryModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -197,6 +253,8 @@ class _$CategoryModelImpl implements _CategoryModel {
 
   @override
   final String id;
+  @override
+  final String householdId;
   @override
   final String name;
   @override
@@ -208,10 +266,18 @@ class _$CategoryModelImpl implements _CategoryModel {
   @override
   @JsonKey()
   final double limit;
+  @override
+  @JsonKey()
+  final CategoryType type;
+  @override
+  final String createdBy;
+  @override
+  @JsonKey()
+  final bool isDefault;
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, iconCodePoint: $iconCodePoint, iconFontFamily: $iconFontFamily, colorValue: $colorValue, limit: $limit)';
+    return 'CategoryModel(id: $id, householdId: $householdId, name: $name, iconCodePoint: $iconCodePoint, iconFontFamily: $iconFontFamily, colorValue: $colorValue, limit: $limit, type: $type, createdBy: $createdBy, isDefault: $isDefault)';
   }
 
   @override
@@ -220,6 +286,8 @@ class _$CategoryModelImpl implements _CategoryModel {
         (other.runtimeType == runtimeType &&
             other is _$CategoryModelImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.householdId, householdId) ||
+                other.householdId == householdId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.iconCodePoint, iconCodePoint) ||
                 other.iconCodePoint == iconCodePoint) &&
@@ -227,7 +295,12 @@ class _$CategoryModelImpl implements _CategoryModel {
                 other.iconFontFamily == iconFontFamily) &&
             (identical(other.colorValue, colorValue) ||
                 other.colorValue == colorValue) &&
-            (identical(other.limit, limit) || other.limit == limit));
+            (identical(other.limit, limit) || other.limit == limit) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.createdBy, createdBy) ||
+                other.createdBy == createdBy) &&
+            (identical(other.isDefault, isDefault) ||
+                other.isDefault == isDefault));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -235,11 +308,15 @@ class _$CategoryModelImpl implements _CategoryModel {
   int get hashCode => Object.hash(
     runtimeType,
     id,
+    householdId,
     name,
     iconCodePoint,
     iconFontFamily,
     colorValue,
     limit,
+    type,
+    createdBy,
+    isDefault,
   );
 
   /// Create a copy of CategoryModel
@@ -259,11 +336,15 @@ class _$CategoryModelImpl implements _CategoryModel {
 abstract class _CategoryModel implements CategoryModel {
   const factory _CategoryModel({
     required final String id,
+    required final String householdId,
     required final String name,
     required final int iconCodePoint,
     required final String iconFontFamily,
     required final int colorValue,
     final double limit,
+    final CategoryType type,
+    required final String createdBy,
+    final bool isDefault,
   }) = _$CategoryModelImpl;
 
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
@@ -271,6 +352,8 @@ abstract class _CategoryModel implements CategoryModel {
 
   @override
   String get id;
+  @override
+  String get householdId;
   @override
   String get name;
   @override
@@ -281,6 +364,12 @@ abstract class _CategoryModel implements CategoryModel {
   int get colorValue;
   @override
   double get limit;
+  @override
+  CategoryType get type;
+  @override
+  String get createdBy;
+  @override
+  bool get isDefault;
 
   /// Create a copy of CategoryModel
   /// with the given fields replaced by the non-null parameter values.

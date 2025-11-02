@@ -1,0 +1,104 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function getUserRole(householdId) {
+      return get(/databases/$(database)/documents/households/$(householdId)/members/$(request.auth.uid)).data.role;
+    }
+
+    function isHouseholdMember(householdId) {
+      return exists(/databases/$(database)/documents/households/$(householdId)/members/$(request.auth.uid));
+    }
+
+    function isAdmin(householdId) {
+      return getUserRole(householdId) == 'admin';
+    }
+
+    function canEdit(householdId) {
+      return getUserRole(householdId) in ['admin', 'editor'];
+    }
+
+    function getMemberStatus(householdId) {
+      return get(/databases/$(database)/documents/households/$(householdId)/members/$(request.auth.uid)).data.status;
+    }
+
+    function isActiveMember(householdId) {
+      return isHouseholdMember(householdId) && getMemberStatus(householdId) == 'active';
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isAuthenticated() && request.auth.uid == userId;
+      allow write: if isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Households collection
+    match /households/{householdId} {
+      allow read: if isAuthenticated() && isActiveMember(householdId);
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && isAdmin(householdId);
+      allow delete: if isAuthenticated() && isAdmin(householdId);
+
+      // Members subcollection
+      match /members/{userId} {
+        allow read: if isAuthenticated() && isActiveMember(householdId);
+        allow create: if isAuthenticated() &&
+          (isAdmin(householdId) ||
+           request.auth.uid == userId);
+        allow update: if isAuthenticated() &&
+          (isAdmin(householdId) ||
+           request.auth.uid == userId);
+        allow delete: if isAuthenticated() && isAdmin(householdId);
+      }
+
+      // Expenses subcollection
+      match /expenses/{expenseId} {
+        allow read: if isAuthenticated() && isActiveMember(householdId);
+        allow create: if isAuthenticated() && canEdit(householdId);
+        allow update: if isAuthenticated() &&
+          (canEdit(householdId) ||
+           resource.data.createdBy == request.auth.uid);
+        allow delete: if isAuthenticated() &&
+          (isAdmin(householdId) ||
+           resource.data.createdBy == request.auth.uid);
+      }
+
+      // Categories subcollection
+      match /categories/{categoryId} {
+        allow read: if isAuthenticated() && isActiveMember(householdId);
+        allow create: if isAuthenticated() && canEdit(householdId);
+        allow update: if isAuthenticated() && canEdit(householdId);
+        allow delete: if isAuthenticated() &&
+          (isAdmin(householdId) ||
+           resource.data.createdBy == request.auth.uid);
+      }
+
+      // Projects subcollection
+      match /projects/{projectId} {
+        allow read: if isAuthenticated() && isActiveMember(householdId);
+        allow create: if isAuthenticated() && canEdit(householdId);
+        allow update: if isAuthenticated() && canEdit(householdId);
+        allow delete: if isAuthenticated() &&
+          (isAdmin(householdId) ||
+           resource.data.createdBy == request.auth.uid);
+      }
+    }
+
+    // Invitations collection
+    match /invitations/{invitationId} {
+      allow read: if isAuthenticated() &&
+        (request.auth.token.email == resource.data.email ||
+         request.auth.uid == resource.data.invitedBy);
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() &&
+        request.auth.token.email == resource.data.email;
+      allow delete: if isAuthenticated() &&
+        request.auth.uid == resource.data.invitedBy;
+    }
+  }
+}

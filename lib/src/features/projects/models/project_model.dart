@@ -1,35 +1,45 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'expense_model.freezed.dart';
-part 'expense_model.g.dart';
+part 'project_model.freezed.dart';
+part 'project_model.g.dart';
+
+enum ProjectStatus {
+  active,
+  onHold,
+  completed,
+  archived,
+}
 
 @freezed
-class ExpenseModel with _$ExpenseModel {
-  const factory ExpenseModel({
+class ProjectModel with _$ProjectModel {
+  const factory ProjectModel({
     required String id,
     required String householdId,
-    required String categoryId,
-    required double amount,
+    required String name,
+    @Default('') String description,
+    required double budget,
+    @Default(0.0) double spent,
     @JsonKey(fromJson: _timestampFromJson, toJson: _timestampToJson)
-    required DateTime spentDate,
+    required DateTime startDate,
+    @JsonKey(
+      fromJson: _nullableTimestampFromJson,
+      toJson: _nullableTimestampToJson,
+    )
+    DateTime? endDate,
+    @Default(ProjectStatus.active) ProjectStatus status,
     required String createdBy,
-    required String paidBy,
-    @Default([]) List<String> splitBetween,
-    @Default('') String note,
-    String? projectId,
-    String? receiptUrl,
-    @Default(false) bool isRecurring,
+    @Default([]) List<String> assignedTo,
     @Default([]) List<String> tags,
     @JsonKey(
       fromJson: _nullableTimestampFromJson,
       toJson: _nullableTimestampToJson,
     )
     DateTime? createdAt,
-  }) = _ExpenseModel;
+  }) = _ProjectModel;
 
-  factory ExpenseModel.fromJson(Map<String, dynamic> json) =>
-      _$ExpenseModelFromJson(json);
+  factory ProjectModel.fromJson(Map<String, dynamic> json) =>
+      _$ProjectModelFromJson(json);
 }
 
 // Helper functions for Timestamp conversion
